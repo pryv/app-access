@@ -55,19 +55,17 @@
      * retrieve the registerURL from URL parameters
      */
     function getRegisterURL() {
-        var customRegisterUrl = pryv.utility.urls.parseClientURL().parseQuery()['pryv-reg'];
-        if (customRegisterUrl) {
-            pryv.Auth.config.registerURL = {host: 'https://' + customRegisterUrl, 'ssl': true};
-        }
-        return customRegisterUrl;
+        return pryv.utility.urls.parseClientURL().parseQuery()['pryv-reg'];
     }
 
     /**
      * process the form and request access
      */
     function requestAccess() {
-
-        pryv.Auth.config.registerURL = getRegisterURL();
+        var customRegisterUrl = getRegisterURL();
+        if (customRegisterUrl) {
+            pryv.Auth.config.registerURL = {host: customRegisterUrl, 'ssl': true};
+        }
 
         var settings = {
             requestingAppId: false,
