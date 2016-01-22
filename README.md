@@ -1,4 +1,4 @@
-# app-access
+# app-web-access
 web app to generate pryv access tokens
 
 ## Connect to custom pryv endpoints
@@ -6,7 +6,6 @@ web app to generate pryv access tokens
 open `http://pryv.github.io/app-web-access/?pryv-reg={custom register name}`
 
 example:
-
 
 [http://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.io](http://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.io)
 
