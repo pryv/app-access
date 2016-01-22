@@ -7,8 +7,8 @@ open `http://pryv.github.io/app-web-access/?pryv-reg={custom register name}`
 
 example:
 
-[http://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.io](http://pryv.github
-.io/app-web-access/?pryv-reg=reg.pryv.io)
+
+[http://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.io](http://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.io)
 
 ### Coding conventions
 
