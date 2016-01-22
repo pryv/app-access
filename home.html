@@ -48,8 +48,107 @@
     </style>
 </head>
 <body>
+<div id="body">
+    <h1>Pryv Access Generation</h1>
+</div>
+<div id='requestAccess'>
+    <div id="introduction">
+        <label>
+            <h2>How to</h2>
+            <ol>
+                <li>Enter the Application id that you will use in your app</li>
+                <li>Setup the streams you will request access to in the Permissions box</li>
+                <li>Press the <b>Request Access</b> button</li>
+                <li><b>Sign in</b> with your username and password</li>
+                <li>Copy Access token and use it to run your tests</li>
+            </ol>
+
+            <h3>Permissions</h3>
+            This defines the streams that your access token will be allowed to manipulate. Please
+            enter a JSON array, where each item contains the fields <b>streamId</b>, <b>defaultName
+        </b> and <b>level</b>.<br>
+            <h4><b>level</b> must be one of the following values:<br></h4>
+            <ul>
+                <li><b>read</b>: allows to get the stream's values</li>
+                <li><b>contribute</b>: read and generate new content</li>
+                <li><b>manage</b>: contribute, update and delete</li>
+            </ul>
+        </label>
+    </div>
+    <table>
+        <tr>
+            <td><label>Register URL</label>
+            </td>
+            <td>
+                <label id="registerUrlText"></label>
+            </td>
+        </tr>
+        <tr>
+            <td><label>Application ID (min length: 6)</label>
+            </td>
+            <td><input id='requestingAppId' name='requestingAppId' type='text'
+                       value='[insert your Application id here]'/>
+            </td>
+        </tr>
+        <tr>
+            <td><label for='requestedPermissions'>Permissions</label>
+            </td>
+            <td><textarea id='requestedPermissions' name='requestedPermissions' rows='9' cols='80'>
+[
+  {
+    "streamId" : "diary",
+    "defaultName" : "Journal",
+    "level" : "read"
+  },
+  {
+    "streamId" : "position",
+    "defaultName" : "Position",
+    "level" : "read"
+  }
+]
+</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><input id='submitButton' type='submit'
+                                   onClick='requestAccess() ; return false;'
+                                   value='Request Access'>
+            </td>
+        </tr>
+        <tr><br/></tr>
+        <tr>
+            <td id="pryvButtonHolder" colspan="2">&nbsp;<span id='pryvButton'></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label><b>Username</b></label>
+            </td>
+            <td>
+                <textarea id="usernameTextArea" rows="1"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label><b>Access token</b></label>
+            </td>
+            <td>
+                <textarea id="tokenTextArea" rows="1">[copy the generated token]</textarea>
+            </td>
+        </tr>
+    </table>
+    <div>
+        <h3>Log</h3>
+        <textarea id="mylog" cols="150" rows="10"></textarea>
+    </div>
+</div>
+</body>
 <script>
 
+    /**
+     * display registerURL param
+     */
+    $("#registerUrlText").append(getRegisterURL());
 
     /**
      * retrieve the registerURL from URL parameters
@@ -75,135 +174,47 @@
             callbacks: {}
         };
         settings.requestingAppId = $('#requestingAppId').val();
-        settings.requestedPermissions = JSON.parse($('#requestedPermissions').val());
-        settings.languageCode = $('#languageCode option:selected').val();
-        settings.returnURL = $('#returnURL').val();
-        settings.oauthState = $('#oauthState').val();
-        settings.forcePolling = $('#forcePolling').attr('checked') == 'checked';
 
-        settings.spanButtonID = 'pryvButton';
+        try {
+            var requestedPerms = JSON.parse($('#requestedPermissions').val());
 
-        settings.callbacks.initialization = function () {
-            mylog("***\n>State: Initialization");
-        };
-        settings.callbacks.needSignin = function (popupUrl, pollUrl, pollRateMs) {
-            mylog("State: needSignin popuUrl: " + popupUrl + " pollUrl: "
-                    + pollUrl + " pollRateMs: " + pollRateMs);
-        };
-        settings.callbacks.needValidation = function (popupUrl, pollUrl,
-                                                      pollRateMs) {
-            mylog("State: needValidation popuUrl: " + popupUrl + " pollUrl: "
-                    + pollUrl + " pollRateMs: " + pollRateMs);
-        };
-        settings.callbacks.accepted = function (username, appToken, languageCode) {
-            mylog("State: SUCCESS! username:" + username + " appToken:" + appToken + " lang:" +
-                    languageCode);
-        };
-        settings.callbacks.refused = function (reason) {
-            mylog("State: REFUSED! " + reason);
-        };
-        settings.callbacks.error = function (code, message) {
-            mylog("State: ERROR! " + code + " " + message);
-        };
+            settings.requestedPermissions = JSON.parse($('#requestedPermissions').val());
+            settings.spanButtonID = 'pryvButton';
 
-        pryv.Auth.setup(settings);
+            settings.callbacks.initialization = function () {
+                displayInLog("Access Requested");
+            };
+            settings.callbacks.needSignin = function (popupUrl, pollUrl, pollRateMs) {
+                displayInLog("Access parameters validated, please sign in");
+            };
+            settings.callbacks.accepted = function (username, appToken, languageCode) {
+                displayInLog(
+                        "Access generation successful, please copy the token to be used with " +
+                        "the associated username");
+                document.getElementById("usernameTextArea").value=username;
+                document.getElementById("tokenTextArea").value=appToken;
+            };
+            settings.callbacks.refused = function (reason) {
+                displayInLog("Access refused by user" + reason);
+            };
+            settings.callbacks.error = function (code, message) {
+                displayInLog("Error: code=" + code + ", message: " + message);
+            };
+
+            pryv.Auth.setup(settings);
+        } catch (e) {
+            displayInLog('Error in Access params: ' + e);
+        }
     }
-    ;
 
-    var buf = "";
-    function mylog(text) {
-        var ta = $("#mylog");
-        buf += ">" + text + "\n";
-        if (typeof(ta) == 'undefined' || typeof(ta[0]) == 'undefined') {
+    function displayInLog(text) {
+        var logTextArea = $("#mylog");
+        if (typeof(logTextArea) == 'undefined' || typeof(logTextArea[0]) == 'undefined') {
             return;
         }
-        ta.append(buf);
-        buf = "";
-        ta.scrollTop(ta[0].scrollHeight - ta.height());
+        logTextArea.append(text + "\n");
+        logTextArea.scrollTop(logTextArea[0].scrollHeight - logTextArea.height());
     }
 
 </script>
-<div id="body">
-    <h1>Pryv Access Generation</h1>
-</div>
-<div id='requestAccess'>
-    <table>
-        <tr>
-            <td><label>Register URL</label>
-            </td>
-            <td>
-                <script type="">document.write(getRegisterURL())</script>
-            </td>
-        </tr>
-        <tr>
-            <td><label for='languageCode'>Language</label>
-            </td>
-            <td><select name='languageCode' id='languageCode'/>
-                <option value="">_Browser_</option>
-                <option value="en">English</option>
-                <option value="fr">French</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td><label for='requestingAppId'>Application ID</label>
-            </td>
-            <td><input id='requestingAppId' name='requestingAppId' type='text'
-                       value='[insert your Application id here]'/>
-            </td>
-        </tr>
-        <tr>
-            <td><label for='requestedPermissions'>Access params</label>
-            </td>
-            <td><textarea id='requestedPermissions' name='requestedPermissions' rows='9' cols='80'>
-[
-  {
-    "streamId" : "diary",
-    "defaultName" : "Journal",
-    "level" : "read"
-  },
-  {
-    "streamId" : "position",
-    "defaultName" : "Position",
-    "level" : "read"
-  }
-]
-</textarea>
-            </td>
-        </tr>
-        <tr>
-            <td><label for='returnURL'>Return URL (opt)</label>
-            </td>
-            <td><input id='returnURL' name='returnURL' type='text'
-                       size='80' value='auto#'/>
-            </td>
-        </tr>
-        <tr>
-            <td><label for='oauthState'>state to simulate oauth (needs returnURL)</label>
-            </td>
-            <td><input id='oauthState' name='oauthState' type='text'
-                       size='80'/>
-            </td>
-        </tr>
-        <tr>
-            <td><input id='submitButton' type='submit'
-                       onClick='requestAccess() ; return false;' value='Request Access'/>
-            </td>
-
-        </tr>
-        <tr><br/></tr>
-        <tr>
-            <td id="pryvButtonHolder" colspan="2">&nbsp;<span id='pryvButton'></span>
-            </td>
-        </tr>
-    </table>
-    <p> You can test with username: <b>perkikiki</b> or <b>tech@pryv.com</b> Password:
-        <b>poilonez</b><br>
-        No registration yet! </p>
-    <hr>
-    <p> History: </p><BR>
-    <textarea id="mylog" cols="150" rows="10"></textarea>
-</div>
-<!-- <script type="text/javascript" src="SDK-VERSION-NUM/pryv-access-sdk.js"></script> -->
-</body>
 </html>
