@@ -60,12 +60,15 @@
                 <li>Setup the streams you will request access to in the Permissions box</li>
                 <li>Press the <b>Request Access</b> button</li>
                 <li><b>Sign in</b> with your username and password</li>
-                <li>Copy Access token and use it to run your tests</li>
+                <li>Authorize the Application access to your account</li>
+                <li>Copy the Access token and use it to run your tests</li>
             </ol>
 
             <h3>Permissions</h3>
-            This defines the streams that your access token will be allowed to manipulate. Please
-            enter a JSON array, where each item contains the fields <b>streamId</b>, <b>defaultName
+            This defines the streams that your access token will be allowed to manipulate. Enter a
+            JSON array where each item contains the fields <b>streamId</b>, <b>defaultName. <br>
+            If you request permissions for streams that do not yet exist, they will be created on
+            the user's account upon user authorization.
         </b> and <b>level</b>.<br>
             <h4><b>level</b> must be one of the following values:<br></h4>
             <ul>
@@ -191,8 +194,8 @@
                 displayInLog(
                         "Access generation successful, please copy the token to be used with " +
                         "the associated username");
-                document.getElementById("usernameTextArea").value=username;
-                document.getElementById("tokenTextArea").value=appToken;
+                document.getElementById("usernameTextArea").value = username;
+                document.getElementById("tokenTextArea").value = appToken;
             };
             settings.callbacks.refused = function (reason) {
                 displayInLog("Access refused by user" + reason);
