@@ -3,222 +3,109 @@
 <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <title>Pryv Access Token Generation</title>
-
-    <script type="text/javascript"
-            src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <!--<script type="text/javascript" src="//api.pryv.com/lib-javascript/latest/pryv
-    .js"></script>-->
-    <script type="text/javascript" src="//pryv.github.io/lib-javascript/0.1.11b/pryv.js"></script>
-
-    <style>
-        body {
-            background-color: #ABABAB;
-        }
-
-        h1 {
-            font: bold 21px Arial;
-            color: #171817;
-            margin-top: 20px;
-        }
-
-        label, p {
-            font: 15px Arial;
-        }
-
-        #requestAccess {
-            width: 95%;
-            height: auto;
-            overflow: hidden;
-            padding: 2%;
-            box-shadow: 0px 0px 8px #171817;
-            background-color: white;
-            margin: auto;
-            margin: 5px 0px 5px 0px;
-        }
-
-        #pryvButtonHolder {
-            background-color: #ABABAB;
-            padding: 2%;
-            box-shadow: 0px 0px 4px #171817;
-        }
-
-        textarea, input {
-            width: 100%;
-        }
-    </style>
+    <link rel="icon" href="img/logoPryv.png">
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <script src="script.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="pryv.js"></script>
 </head>
 <body>
-<div id="body">
+
+<div class="title">
     <h1>Pryv Access Token Generation</h1>
 </div>
-<div id='requestAccess'>
-    <div id="introduction">
-        <label>
-            <h2>How to</h2>
-            <ol>
-                <li>Enter the Application ID that you will use in your app</li>
-                <li>Setup the streams you will request access to in the Permissions box</li>
-                <li>Press the <b>Request Access</b> button</li>
-                <li><b>Sign in</b> with your username and password</li>
-                <li>Authorize the Application access to your account</li>
-                <li>Copy the Access token and use it to run your tests</li>
-            </ol>
 
-            <h3>Permissions</h3>
-            This defines the streams that your access token will be allowed to manipulate. Enter a
-            JSON array where each item contains the fields <b>streamId</b>, <b>defaultName</b>
-            and <b>level</b>.<br>
-            If you request permissions for streams that do not yet exist, they will be created on
-            the user's account upon user authorization.<br>
+<div class="container">
+    <div class="boxDiv">
+        <h2>How to</h2>
+        <ol>
+            <li>Enter the <u>Application ID</u> that you will use in your app</li>
+            <li>Setup the streams you will request access to in the <u>Permissions Box</u></li>
+            <li>Press the <u>Request Access</u> button</li>
+            <li><u>Sign in</u> with your username and password</li>
+            <li>Authorize the Application access to your account</li>
+            <li>Copy the Access token and use it to run your tests</li>
+        </ol>
+    </div>
 
-            <h4><b>level</b> must be one of the following values:<br></h4>
-            <ul>
-                <li><b>read</b>: allows to get the stream's values</li>
-                <li><b>contribute</b>: read and generate new content</li>
-                <li><b>manage</b>: contribute, update and delete</li>
-            </ul>
-        </label>
+    <div class="boxDiv">
+        <h3>Permissions</h3>
+        This defines the streams that your access token will be allowed to manipulate.<br>
+        If you request permissions for streams that don't yet exist, they will be created on the user's account upon user authorization.<br><br>
+        If the <u>Mater Token</u> option is checked, it will set the level <u>manage</u> on all streams for the selected app, or you can chose to manage permissions manually :
+        <ul>
+            <li><u>Basic:</u> Fill up the fields <u>streamId</u>, <u>level</u> and <u>defaultName</u>(optional) and click the Submit button.</li>
+            <li><u>Advanced:</u> Enter a JSON array where each item contains the fields <u>streamId</u>, <u>level</u> and <u>defaultName</u>(optional).</li>
+        </ul>
+
+        <h4>The <u>level</u> must be one of the following values:<br></h4>
+        <ul>
+            <li><u>read</u>: Allows to get the stream's values.</li>
+            <li><u>contribute</u>: Read and generate new content.</li>
+            <li><u>manage</u>: Contribute, update and delete.</li>
+        </ul>
     </div>
     <table>
         <tr>
-            <td><label>Register URL</label>
+            <td class="leftColumn"><p><u>Register URL</u></p></td>
+            <td class="rightColumn"><p id="registerUrlText"></p></td>
+        </tr>
+        <tr>
+            <td class="leftColumn"><p><u>Application ID</u> (min length: 6)</p></td>
+            <td class="rightColumn"><input id='requestingAppId' type='text' placeholder='Insert your Application ID'/></td>
+        </tr>
+        <tr>
+            <td class="leftColumn">
+                <p><u>Permissions</u></p>
+                <div class="checkboxDiv">
+                    <input type="checkbox" name="masterToken" id="masterToken">
+                    <label for="masterToken">Master Token</label>
+                </div>
             </td>
-            <td>
-                <label id="registerUrlText"></label>
+            <td class="rightColumn">
+                <div id="permissionsViewInactive"></div>
+                <div id="permissionsViewActive">
+                    <div class="addStreamDiv">
+                        <input id='streamId' type='text' placeholder='StreamId'/><br>
+                        <select id="level">
+                            <option value="read">Read</option>
+                            <option value="contribute">Contribute</option>
+                            <option value="manage">Manage</option>
+                        </select><br>
+                        <input id='name' type='text' placeholder='Name (optional)'/><br>
+                        <input id='submitPermission' type="button" value="Submit">
+                    </div>
+                    <div class="streamListDiv">
+                        <textarea id='permissionsArea'></textarea>
+                    </div>
+                </div>
             </td>
         </tr>
         <tr>
-            <td><label>Application ID (min length: 6)</label>
-            </td>
-            <td><input id='requestingAppId' name='requestingAppId' type='text'
-                       value='[insert your Application id here]'/>
+            <td colspan="2">
+                <input id='submitButton' type='submit' onClick='requestAccess() ; return false;' value='Request Access'>
             </td>
         </tr>
         <tr>
-            <td><label for='requestedPermissions'>Permissions</label>
-            </td>
-            <td><textarea id='requestedPermissions' name='requestedPermissions' rows='9' cols='80'>
-[
-  {
-    "streamId" : "diary",
-    "defaultName" : "Journal",
-    "level" : "read"
-  },
-  {
-    "streamId" : "position",
-    "defaultName" : "Position",
-    "level" : "read"
-  }
-]
-</textarea>
+            <td colspan="2">
+                <div id="pryvButtonHolder">
+                    <span id='pryvButton'></span>
+                </div>
             </td>
         </tr>
         <tr>
-            <td colspan="2"><input id='submitButton' type='submit'
-                                   onClick='requestAccess() ; return false;'
-                                   value='Request Access'>
-            </td>
-        </tr>
-        <tr><br/></tr>
-        <tr>
-            <td id="pryvButtonHolder" colspan="2">&nbsp;<span id='pryvButton'></span>
-            </td>
+            <td class="leftColumn"><p><u>Username</u></p></td>
+            <td class="rightColumn"><p id="usernameArea"></p></td>
         </tr>
         <tr>
-            <td>
-                <label><b>Username</b></label>
-            </td>
-            <td>
-                <textarea id="usernameTextArea" rows="1"></textarea>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label><b>Access token</b></label>
-            </td>
-            <td>
-                <textarea id="tokenTextArea" rows="1">[copy the generated token]</textarea>
-            </td>
+            <td class="leftColumn"><p><u>Access token</u></p></td>
+            <td class="rightColumn"><p id="tokenArea"></p></td>
         </tr>
     </table>
-    <div>
-        <h3>Log</h3>
-        <textarea id="mylog" cols="150" rows="10"></textarea>
+    <div class="consoleDiv">
+        <h3>Console</h3>
+        <textarea id="console" cols="150" rows="10"></textarea>
     </div>
 </div>
 </body>
-<script>
-
-    /**
-     * display registerURL param
-     */
-    $("#registerUrlText").append(getRegisterURL());
-
-    /**
-     * retrieve the registerURL from URL parameters
-     */
-    function getRegisterURL() {
-        return pryv.utility.urls.parseClientURL().parseQuery()['pryv-reg'];
-    }
-
-    /**
-     * process the form and request access
-     */
-    function requestAccess() {
-        var customRegisterUrl = getRegisterURL();
-        if (customRegisterUrl) {
-            pryv.Auth.config.registerURL = {host: customRegisterUrl, 'ssl': true};
-        }
-
-        var settings = {
-            requestingAppId: false,
-            languageCode: false,
-            requestedPermissions: false,
-            returnURL: false,
-            callbacks: {}
-        };
-        settings.requestingAppId = $('#requestingAppId').val();
-
-        try {
-            var requestedPerms = JSON.parse($('#requestedPermissions').val());
-
-            settings.requestedPermissions = JSON.parse($('#requestedPermissions').val());
-            settings.spanButtonID = 'pryvButton';
-
-            settings.callbacks.initialization = function () {
-                displayInLog("Access Requested");
-            };
-            settings.callbacks.needSignin = function (popupUrl, pollUrl, pollRateMs) {
-                displayInLog("Access parameters validated, please sign in");
-            };
-            settings.callbacks.accepted = function (username, appToken, languageCode) {
-                displayInLog(
-                        "Access generation successful, please copy the token to be used with " +
-                        "the associated username");
-                document.getElementById("usernameTextArea").value = username;
-                document.getElementById("tokenTextArea").value = appToken;
-            };
-            settings.callbacks.refused = function (reason) {
-                displayInLog("Access refused by user" + reason);
-            };
-            settings.callbacks.error = function (code, message) {
-                displayInLog("Error: code=" + code + ", message: " + message);
-            };
-
-            pryv.Auth.setup(settings);
-        } catch (e) {
-            displayInLog('Error in Access params: ' + e);
-        }
-    }
-
-    function displayInLog(text) {
-        var logTextArea = $("#mylog");
-        if (typeof(logTextArea) == 'undefined' || typeof(logTextArea[0]) == 'undefined') {
-            return;
-        }
-        logTextArea.append(text + "\n");
-        logTextArea.scrollTop(logTextArea[0].scrollHeight - logTextArea.height());
-    }
-
-</script>
 </html>
