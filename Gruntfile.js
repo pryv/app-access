@@ -58,6 +58,9 @@ module.exports = function (grunt) {
     },
 
     buildGhPages: {
+      options: {
+        build_branch: 'feature/update-app'
+      },
       ghPages: {}
     },
 
