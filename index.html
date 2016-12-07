@@ -4,8 +4,11 @@
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <title>Pryv Access Token Generation</title>
     <link rel="icon" href="logoPryv.png">
-    <script src="scriptBrowserify.js"></script>
     <link href="style.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Roboto">
+
+    <script src="scriptBrowserify.js"></script>
 </head>
 <body>
 
@@ -17,45 +20,44 @@
     <div class="boxDiv">
         <h2>How to</h2>
         <ol>
-            <li>Enter the <u>Application ID</u> that you will use in your app</li>
-            <li>Setup the streams you will request access to in the <u>Permissions Box</u></li>
-            <li>Press the <u>Request Access</u> button</li>
-            <li><u>Sign in</u> with your username and password</li>
-            <li>Authorize the Application access to your account</li>
-            <li>Copy the Access token and use it to run your tests</li>
+            <li>Enter the <b>Application ID</b> that you will use in your app</li>
+            <li>Setup the streams you will request access to in the <b>Permissions Box</b></li>
+            <li>Press the <b>Request Access</b> button</li>
+            <li><b>Sign in</b> with your username and password</li>
+            <li>Authorize the application access to your account</li>
+            <li>Copy the <b>Access token</b> and use it to run your tests</li>
         </ol>
     </div>
 
     <div class="boxDiv">
         <h3>Permissions</h3>
         This defines the streams that your access token will be allowed to manipulate.<br>
-        If you request permissions for streams that don't yet exist, they will be created on the user's account upon user authorization.<br><br>
-        If the <u>Mater Token</u> option is checked, it will set the level <u>manage</u> on all streams for the selected app, or you can chose to manage permissions manually :
+        If you request permissions for streams that don't yet exist, they will be created on the user's account upon user authorization.<br>
+        You are required to provide a <b>defaultName</b> in that case.<br><br>
+        The <b>level</b> must be one of the following values:
         <ul>
-            <li><u>Basic:</u> Fill up the fields <u>streamId</u>, <u>level</u> and <u>defaultName</u>(optional) and click the <u>Add</u> button.</li>
-            <li><u>Advanced:</u> Edit the textarea directly with a JSON array where each item contains the fields <u>streamId</u>, <u>level</u> and <u>defaultName</u>(optional).</li>
+            <li><b>read</b>: Allows to get the stream's values.</li>
+            <li><b>contribute</b>: Read and generate new content.</li>
+            <li><b>manage</b>: Contribute, update and delete.</li>
         </ul>
+        Fill the fields <b>StreamId</b>, <b>Level</b> and <b>Name</b> (optional) and click the <b>Add</b> button or edit the <b>textArea</b> directly with a JSON array where each item contains the fields mentioned above.<br><br>
 
-        <h4>The <u>level</u> must be one of the following values:</h4>
-        <ul>
-            <li><u>read</u>: Allows to get the stream's values.</li>
-            <li><u>contribute</u>: Read and generate new content.</li>
-            <li><u>manage</u>: Contribute, update and delete.</li>
-        </ul>
-        At any moment click the <u>Clear</u> button to erase the content of the Permissions Area.
+        If the <b>Master Token</b> option is checked, it will set the level <b>manage</b> on all streams for the selected application.<br><br>
+
+        Use the <b>Clear</b> button to erase the content of the <b>Permissions Area</b>.
     </div>
     <table>
         <tr>
-            <td class="leftColumn"><p><u>Register URL</u></p></td>
+            <td class="leftColumn"><p><b>Register URL</b></p></td>
             <td class="rightColumn"><p id="registerUrlText"></p></td>
         </tr>
         <tr>
-            <td class="leftColumn"><p><u>Application ID</u> (min length: 6)</p></td>
+            <td class="leftColumn"><p><b>Application ID</b> (min length: 6)</p></td>
             <td class="rightColumn"><input id='requestingAppId' type='text' placeholder='Insert your Application ID'/></td>
         </tr>
         <tr>
             <td class="leftColumn">
-                <p><u>Permissions</u></p>
+                <p><b>Permissions</b></p>
                 <div class="checkboxDiv">
                     <input type="checkbox" name="masterToken" id="masterToken">
                     <label for="masterToken">Master Token</label>
@@ -94,11 +96,11 @@
             </td>
         </tr>
         <tr>
-            <td class="leftColumn"><p><u>Username</u></p></td>
+            <td class="leftColumn"><p><b>Username</b></p></td>
             <td class="rightColumn"><p id="usernameArea"></p></td>
         </tr>
         <tr>
-            <td class="leftColumn"><p><u>Access token</u></p></td>
+            <td class="leftColumn"><p><b>Access token</b></p></td>
             <td class="rightColumn"><p id="tokenArea"></p></td>
         </tr>
     </table>
