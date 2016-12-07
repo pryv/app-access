@@ -3,6 +3,7 @@ body {
     min-width: 800px;
     max-width: 1205px;
     font-size: 15px;
+    font-weight: 300;
     font-family: Roboto, sans-serif;
     background-color: #ABABAB;
 }
