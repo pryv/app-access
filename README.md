@@ -15,8 +15,8 @@ Example: [http://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.io](http://pry
 #### Clone/Download
 
 * Run `npm install`.
-* Run `npm run grunt`
-* Open the file `dist/index.html`
+* Run `npm run grunt`.
+* Open the file `dist/index.html`.
 
 Chose a custom register name : `~/app-web-access/dist/index.html?pryv-reg={custom register name}`
 
