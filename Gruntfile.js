@@ -43,13 +43,6 @@ module.exports = function (grunt) {
             expand: true,
             flatten: true,
             filter: 'isFile',
-            src: ['font/*.ttf'],
-            dest: 'dist/'
-          },
-          {
-            expand: true,
-            flatten: true,
-            filter: 'isFile',
             src: ['img/*.png'],
             dest: 'dist/'
           }
