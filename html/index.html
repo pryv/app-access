@@ -3,11 +3,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <title>Pryv Access Token Generation</title>
-    <link rel="icon" href="img/logoPryv.png">
-    <link href="css/style.css" rel="stylesheet" type="text/css"/>
-    <script src="script.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="pryv.js"></script>
+    <link rel="icon" href="logoPryv.png">
+    <script src="scriptBrowserify.js"></script>
+    <link href="style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 
@@ -34,16 +32,17 @@
         If you request permissions for streams that don't yet exist, they will be created on the user's account upon user authorization.<br><br>
         If the <u>Mater Token</u> option is checked, it will set the level <u>manage</u> on all streams for the selected app, or you can chose to manage permissions manually :
         <ul>
-            <li><u>Basic:</u> Fill up the fields <u>streamId</u>, <u>level</u> and <u>defaultName</u>(optional) and click the Submit button.</li>
-            <li><u>Advanced:</u> Enter a JSON array where each item contains the fields <u>streamId</u>, <u>level</u> and <u>defaultName</u>(optional).</li>
+            <li><u>Basic:</u> Fill up the fields <u>streamId</u>, <u>level</u> and <u>defaultName</u>(optional) and click the <u>Add</u> button.</li>
+            <li><u>Advanced:</u> Edit the textarea directly with a JSON array where each item contains the fields <u>streamId</u>, <u>level</u> and <u>defaultName</u>(optional).</li>
         </ul>
 
-        <h4>The <u>level</u> must be one of the following values:<br></h4>
+        <h4>The <u>level</u> must be one of the following values:</h4>
         <ul>
             <li><u>read</u>: Allows to get the stream's values.</li>
             <li><u>contribute</u>: Read and generate new content.</li>
             <li><u>manage</u>: Contribute, update and delete.</li>
         </ul>
+        At any moment click the <u>Clear</u> button to erase the content of the Permissions Area.
     </div>
     <table>
         <tr>
@@ -73,7 +72,8 @@
                             <option value="manage">Manage</option>
                         </select><br>
                         <input id='name' type='text' placeholder='Name (optional)'/><br>
-                        <input id='submitPermission' type="button" value="Submit">
+                        <input id='addPermission' type="button" value="Add">
+                        <input id='clearPermissionArea' type="button" value="Clear">
                     </div>
                     <div class="streamListDiv">
                         <textarea id='permissionsArea'></textarea>
@@ -83,7 +83,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <input id='submitButton' type='submit' onClick='requestAccess() ; return false;' value='Request Access'>
+                <input id='submitButton' type='submit' value='Request Access'>
             </td>
         </tr>
         <tr>

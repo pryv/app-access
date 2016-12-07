@@ -1,4 +1,7 @@
-/* global $, pryv */
+/* global require */
+
+var $ = require('jquery'),
+  pryv = require('pryv');
 
 var defaultPermissions = [{
   streamId : 'diary',
@@ -8,9 +11,12 @@ var defaultPermissions = [{
 
 window.onload = function () {
   var $permissionsArea = $('#permissionsArea'),
-    $submitPermission = $('#submitPermission'),
-    $masterToken = $('#masterToken'),
-    $regUrlText = $('#registerUrlText');
+    $clearButton= $('#clearPermissionArea'),
+    $addPermission = $('#addPermission'),
+    $regUrlText = $('#registerUrlText'),
+    $submitButton = $('#submitButton'),
+    $masterToken = $('#masterToken');
+
 
   permissionsAreaState(false);
   $regUrlText.text(getRegisterURL());
@@ -18,7 +24,9 @@ window.onload = function () {
   $permissionsArea.val(JSON.stringify(defaultPermissions, null, '  '));
 
   $masterToken.click(masterTokenManagement);
-  $submitPermission.click(submitPermission);
+  $addPermission.click(addPermission);
+  $submitButton.click(requestAccess);
+  $clearButton.click(clearPermissions);
 };
 
 /**
@@ -53,23 +61,25 @@ function masterTokenManagement() {
  * @param state {Boolean}
  */
 function permissionsAreaState(state) {
-  var $submitPermission = $('#submitPermission'),
+  var $addPermission = $('#addPermission'),
     $permissionsArea = $('#permissionsArea'),
+    $clearButton= $('#clearPermissionArea'),
     $streamId = $('#streamId'),
     $level = $('#level'),
     $name = $('#name');
 
-  $submitPermission.prop('disabled', state);
   $permissionsArea.prop('disabled', state);
+  $addPermission.prop('disabled', state);
+  $clearButton.prop('disabled', state);
   $streamId.prop('disabled', state);
   $level.prop('disabled', state);
   $name.prop('disabled', state);
 }
 
 /**
- * manage the submit permission button
+ * manage the add permission button
  */
-function submitPermission() {
+function addPermission() {
   var $permissionsArea = $('#permissionsArea'),
     $streamId = $('#streamId'),
     $level = $('#level option:selected'),
@@ -88,12 +98,12 @@ function submitPermission() {
       streamId: $streamId.val(),
       defaultName: $name.val(),
       level: $level.val()
-    }]
+    }];
   } else {
     permission = [{
       streamId: $streamId.val(),
       level: $level.val()
-    }]
+    }];
   }
 
   if ($permissionsArea.val()) {
@@ -110,15 +120,26 @@ function submitPermission() {
 }
 
 String.prototype.addNewPermission = function(newPermission) {
-  return this.replace('\n]', ',\n' + newPermission.substring(2, newPermission.length ))
+  return this.replace('\n]', ',\n' + newPermission.substring(2, newPermission.length ));
 };
+
+
+/**
+ * manage the clear permissions button
+ */
+function clearPermissions() {
+  var $permissionsArea = $('#permissionsArea');
+
+  $permissionsArea.val('');
+}
+
 
 /**
  * prints to console a message/error
  * @param text {String}
  */
 function logToConsole(text) {
-  var $console = $("#console");
+  var $console = $('#console');
 
   $console.append(text + '\n');
   if($console.length) {
@@ -159,23 +180,23 @@ function requestAccess() {
     settings.spanButtonID = 'pryvButton';
 
     settings.callbacks.initialization = function () {
-      logToConsole("Access Requested.");
+      logToConsole('Access Requested.');
     };
     settings.callbacks.needSignin = function () {
-      logToConsole("Access parameters validated, please sign in.");
+      logToConsole('Access parameters validated, please sign in.');
     };
     settings.callbacks.accepted = function (username, appToken) {
       logToConsole(
-        "Access generation successful, please copy the token to be used with " +
-        "the associated username.");
+        'Access generation successful, please copy the token to be used with ' +
+        'the associated username.');
       $username.text(username);
       $token.text(appToken);
     };
     settings.callbacks.refused = function (reason) {
-      logToConsole("Access refused by user" + reason);
+      logToConsole('Access refused by user' + reason);
     };
     settings.callbacks.error = function (code, message) {
-      logToConsole("Error: code=" + code + ", message: " + message);
+      logToConsole('Error: code=' + code + ', message: ' + message);
     };
 
     pryv.Auth.setup(settings);

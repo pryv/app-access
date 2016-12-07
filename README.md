@@ -2,11 +2,23 @@
 
 This is a web app to generate pryv access tokens.
 
-## Chose a custom pryv endpoints
+## Installation
 
-Open `http://pryv.github.io/app-web-access/?pryv-reg={custom register name}`
+#### Direct Access
+
+Access the app via [GitHub Pages]()
+
+Chose a custom register name: `http://pryv.github.io/app-web-access/?pryv-reg={custom register name}`
 
 Example: [http://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.io](http://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.io)
+
+#### Clone/Download
+
+* Run `npm install`.
+* Run `npm run grunt`
+* Open the file `dist/index.html`
+
+Chose a custom register name : `~/app-web-access/dist/index.html?pryv-reg={custom register name}`
 
 ### Coding conventions
 
