@@ -1,10 +1,10 @@
 # Pryv app-web-access
 
-Web app to generate pryv `app` [access](http://api.pryv.com/concepts/#accesses) tokens
+Web app to generate a pryv [app access](http://api.pryv.com/concepts/#accesses) token
 
 ## Usage
 
-Pass a custom register name in the query parameter: `http://pryv.github.io/app-web-access/?pryv-reg={custom register URL}`
+Pass a register name in the query parameter: `http://pryv.github.io/app-web-access/?pryv-reg={custom register URL}`
 
 Example: [http://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.me](http://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.me)
 
