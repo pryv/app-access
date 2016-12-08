@@ -1,18 +1,21 @@
-# app-web-access
-web app to generate pryv access tokens
+# Pryv app-web-access
 
-## Connect to custom pryv endpoints
+Web app to generate a pryv [app access](http://api.pryv.com/concepts/#accesses) token
 
-open `http://pryv.github.io/app-web-access/?pryv-reg={custom register name}`
+## Usage
 
-example:
+Pass a register name in the query parameter: `http://pryv.github.io/app-web-access/?pryv-reg={custom register URL}`
 
-[http://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.io](http://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.io)
+Example: [http://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.me](http://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.me)
 
-### Coding conventions
+## Contribute
 
-See our [guidelines](https://pryv.github.io/guidelines/).
+*Prerequisites:* __node__ & __npm__
+
+* Download dependencies with `npm install`.
+* Generate web app with `npm run grunt`.
+* Open the file `dist/index.html?pryv-reg={custom register URL}`.
 
 ## License
 
-MIT License
+[MIT](https://github.com/pryv/app-web-access/blob/master/LICENSE)

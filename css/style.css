@@ -1,0 +1,177 @@
+body {
+    margin: 0px;
+    min-width: 800px;
+    max-width: 1205px;
+    font-size: 15px;
+    font-weight: 300;
+    font-family: Roboto, sans-serif;
+    background-color: #ABABAB;
+}
+
+textarea {
+    resize: none;
+    padding: 3px;
+    font-size: 13px;
+    font-family: inherit;
+    width: calc(100% - 4px);
+}
+
+table {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    font-family: inherit;
+    box-shadow: 0px 0px 2px 0px #171817;
+}
+
+table tr {
+    height: 50px;
+}
+
+input[type=submit] {
+    width: 100%;
+    font-size: 20px;
+    font-family: inherit;
+}
+
+input[type=text]{
+    width: 100%;
+    font-family: inherit;
+    padding: 2px 0px 0px 5px;
+    box-sizing: border-box;
+}
+
+input[type=checkbox] {
+    position:absolute;
+    clip: rect(0 0 0 0);
+}
+input[type=checkbox] + label {
+    padding-left:23px;
+    height:18px;
+    display:inline-block;
+    background-repeat:no-repeat;
+    cursor:pointer;
+}
+input[type=checkbox]:checked + label {
+    background-position: 0 -18px;
+}
+
+label {
+    background-image: url('./checkboxStyle.png');
+}
+
+select {
+    width: 220px;
+    padding: 2px 0px 2px 0px;
+    margin-bottom: 5px;
+}
+
+.title {
+    padding-left: 10px;
+    margin: 20px 0px 10px 10px;
+}
+
+.title h1 {
+    margin: 0px;
+    font-size: 30px;
+}
+
+.container {
+    width: auto;
+    height: auto;
+    margin: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: white;
+    box-shadow: 0px 0px 4px 0px #171817;
+}
+
+.boxDiv {
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #9b9b9b;
+}
+
+.addStreamDiv {
+    width: 220px;
+    text-align: center;
+    margin-bottom: -2px;
+    vertical-align: top;
+    display: inline-block;
+    padding: 7px 10px 0px 10px;
+}
+
+.addStreamDiv input[type=text] {
+    padding-left: 5px;
+    margin-bottom: 5px;
+}
+
+.streamListDiv {
+    display: inline-block;
+    width: calc(100% - 250px);
+}
+
+.streamListDiv textarea {
+    height: 148px;
+}
+
+.checkboxDiv {
+    position: absolute;
+    padding: 15px 5px 5px 40px;
+}
+
+.consoleDiv {
+    padding: 5px;
+    text-align: center;
+    margin-top: 20px;
+    border-top: 1px solid #9b9b9b;
+}
+
+.consoleDiv h3 {
+    margin: 10px 0px 10px 0px;
+}
+
+.leftColumn {
+    width: 250px;
+}
+
+.leftColumn > p {
+    font-size: 17px;
+}
+
+.rightColumn {
+    width: calc(100% - 220px);
+}
+
+#permissionsViewActive {
+    width: 100%;
+    padding: 5px;
+    height: 168px;
+    border-radius: 6px;
+    box-sizing: border-box;
+    background-color: #cdcdcd;
+}
+
+#permissionsViewInactive {
+    display: none;
+    height: 168px;
+    position: absolute;
+    border-radius: 6px;
+    filter: opacity(40%);
+    box-sizing: border-box;
+    background-color: #cdcdcd;
+}
+
+#pryvButtonHolder {
+    height: 25px;
+    padding: 10px;
+    margin-left: 2px;
+    width: calc(100% - 23px);
+    background-color: #ABABAB;
+    box-shadow: 0px 0px 4px #171817;
+}
+
+#console {
+    height: 200px;
+}

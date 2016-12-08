@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>Pryv Access Token Generation</title>
+    <link rel="icon" href="logoPryv.png">
+    <link href="style.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400">
+
+    <script src="scriptBrowserify.js"></script>
+</head>
+<body>
+
+<div class="title">
+    <h1>Pryv Access Token Generation</h1>
+</div>
+
+<div class="container">
+    <div class="boxDiv">
+        <h2>How to</h2>
+        <ol>
+            <li>Enter the <b>Application ID</b> that you will use in your app</li>
+            <li>Setup the streams you will request access to in the <b>Permissions</b> box</li>
+            <li>Press the <b>Request Access</b> button</li>
+            <li><b>Sign in</b> with your username and password</li>
+            <li>Authorize the application access to your account by pressing on <b>Accept</b></li>
+            <li>Copy the <b>Access token</b> and use it to run your tests</li>
+        </ol>
+    </div>
+
+    <div class="boxDiv">
+        <h3>Permissions</h3>
+        This defines the streams that your access token will be allowed to manipulate.<br>
+        If you request permissions for streams that don't exist yet, they will be created on the
+        user's account upon user authorization.<br>
+        You are required to provide a <b>defaultName</b> in that case.<br><br>
+        The <b>level</b> must be one of the following values:
+        <ul>
+            <li><b>read</b>: Allows to get the stream's values.</li>
+            <li><b>contribute</b>: Read and generate new content.</li>
+            <li><b>manage</b>: Contribute, update and delete.</li>
+        </ul>
+        Fill the fields <b>StreamId</b>, <b>Level</b> and <b>defaultName</b> (optional) and press the <b>Add</b> button to add a permission or edit the textArea directly with a JSON array where each item contains the aforementioned fields.<br><br>
+
+        If the <b>Master Token</b> option is checked, it will set the level <b>manage</b> on all streams for the selected application.<br><br>
+
+        Use the <b>Clear</b> button to erase the content of the <b>Permissions Area</b>.
+    </div>
+    <table>
+        <tr>
+            <td class="leftColumn"><p><b>Register URL</b></p></td>
+            <td class="rightColumn"><p id="registerUrlText"></p></td>
+        </tr>
+        <tr>
+            <td class="leftColumn"><p><b>Application ID</b> (min length: 6)</p></td>
+            <td class="rightColumn"><input id='requestingAppId' type='text' placeholder='Insert your Application ID'/></td>
+        </tr>
+        <tr>
+            <td class="leftColumn">
+                <p><b>Permissions</b></p>
+                <div class="checkboxDiv">
+                    <input type="checkbox" name="masterToken" id="masterToken">
+                    <label for="masterToken">Master Token</label>
+                </div>
+            </td>
+            <td class="rightColumn">
+                <div id="permissionsViewInactive"></div>
+                <div id="permissionsViewActive">
+                    <div class="addStreamDiv">
+                        <input id='streamId' type='text' placeholder='StreamId'/><br>
+                        <select id="level">
+                            <option value="read">Read</option>
+                            <option value="contribute">Contribute</option>
+                            <option value="manage">Manage</option>
+                        </select><br>
+                        <input id='name' type='text' placeholder='Name (optional)'/><br>
+                        <input id='addPermission' type="button" value="Add">
+                        <input id='clearPermissionArea' type="button" value="Clear">
+                    </div>
+                    <div class="streamListDiv">
+                        <textarea id='permissionsArea'></textarea>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input id='submitButton' type='submit' value='Request Access'>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div id="pryvButtonHolder">
+                    <span id='pryvButton'></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="leftColumn"><p><b>Username</b></p></td>
+            <td class="rightColumn"><p id="usernameArea"></p></td>
+        </tr>
+        <tr>
+            <td class="leftColumn"><p><b>Access token</b></p></td>
+            <td class="rightColumn"><p id="tokenArea"></p></td>
+        </tr>
+    </table>
+    <div class="consoleDiv">
+        <h3>Console</h3>
+        <textarea id="console" cols="150" rows="10"></textarea>
+    </div>
+</div>
+</body>
+</html>
