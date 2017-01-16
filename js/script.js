@@ -27,6 +27,10 @@ window.onload = function () {
   $addPermission.click(addPermission);
   $submitButton.click(requestAccess);
   $clearButton.click(clearPermissions);
+
+  // Toggle dev options
+  toggleDevOptions();
+  $('#toggleDev').click(toggleDevOptions);
 };
 
 /**
@@ -168,11 +172,11 @@ function requestAccess() {
 
   // Rec-la config, only for dev
   if ($('#reclaDevel').val().length > 0) {
-    Pryv.Access.config.reclaDevel = $('#reclaDevel').val();
+    pryv.Access.config.reclaDevel = $('#reclaDevel').val();
   } else {
-    Pryv.Access.config.reclaDevel = false;
+    pryv.Access.config.reclaDevel = false;
   }
-  Pryv.Access._init(); //because we change the config
+  pryv.Access._init(); //because we change the config
 
   var settings = {
     requestingAppId: false,
@@ -187,7 +191,7 @@ function requestAccess() {
   settings.languageCode = $('#languageCode option:selected').val();
   settings.returnURL = $('#returnURL').val();
   settings.oauthState = $('#oauthState').val();
-  settings.forcePolling = $('#forcePolling').attr('checked') == 'checked';
+  settings.forcePolling = $('#forcePolling').attr('checked') === 'checked';
 
   try {
     settings.requestedPermissions = JSON.parse($('#permissionsArea').val());
@@ -218,3 +222,11 @@ function requestAccess() {
     logToConsole('Error in Access params: ' + e);
   }
 }
+
+function toggleDevOptions() {
+  $('#languageCode').parent().parent().toggle();
+  $('#returnURL').parent().parent().toggle();
+  $('#oauthState').parent().parent().toggle();
+  $('#forcePolling').parent().parent().toggle();
+  $('#reclaDevel').parent().parent().toggle();
+  }

@@ -47,35 +47,11 @@
 
         Use the <b>Clear</b> button to erase the content of the Permissions text box.
     </div>
+
     <table>
         <tr>
             <td class="leftColumn"><p><b>Register URL</b></p></td>
             <td class="rightColumn"><p id="registerUrlText"></p></td>
-        </tr>
-        <tr>
-            <td class="leftColumn"><p><b>Rec-La Dev</b></p></td>
-            <td class="rightColumn"><input name='reclaDevel' id='reclaDevel' value=':4443/v2/access.html'/></td>
-        </tr>
-        <tr>
-            <td class="leftColumn"><p><b>Force Polling</b></p></td>
-            <td class="rightColumn"><input type='checkbox' name='forcePolling' id='forcePolling' /></td>
-        </tr>
-        <tr>
-            <td class="leftColumn"><p><b>Language</b></p></td>
-            <td class="rightColumn">
-                <select name='languageCode' id='languageCode' />
-                <option value="">_Browser_</option>
-                <option value="en">English</option>
-                <option value="fr">French</option> </select>
-            </td>
-        </tr>
-        <tr>
-            <td class="leftColumn"><p><b>Return URL (opt)</b></p></td>
-            <td class="rightColumn"><input id='returnURL' name='returnURL' type='text' value='auto#'/></td>
-        </tr>
-        <tr>
-            <td class="leftColumn"><p><b>State to simulate oauth (needs returnURL)</b></p></td>
-            <td class="rightColumn"><input id='oauthState' name='oauthState' type='text'/></td>
         </tr>
         <tr>
             <td class="leftColumn"><p><b>Application ID</b> (min length: 6)</p></td>
@@ -109,6 +85,37 @@
                 </div>
             </td>
         </tr>
+
+        <tr>
+            <td colspan="2">
+                <button id="toggleDev">Show/hide advanced options</button>
+            </td>
+        </tr>
+        <tr>
+            <td class="leftColumn"><p><b>Rec-La Dev</b></p></td>
+            <td class="rightColumn"><input name='reclaDevel' id='reclaDevel' value=':4443/v2/access.html'/></td>
+        </tr>
+        <tr>
+            <td class="leftColumn"><p><b>Force Polling</b></p></td>
+            <td class="rightColumn"><input type='checkbox' name='forcePolling' id='forcePolling' /></td>
+        </tr>
+        <tr>
+            <td class="leftColumn"><p><b>Language</b></p></td>
+            <td class="rightColumn">
+                <select name='languageCode' id='languageCode' />
+                <option value="">_Browser_</option>
+                <option value="en">English</option>
+                <option value="fr">French</option> </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="leftColumn"><p><b>Return URL (opt)</b></p></td>
+            <td class="rightColumn"><input id='returnURL' name='returnURL' type='text' value='auto#'/></td>
+        </tr>
+        <tr>
+            <td class="leftColumn"><p><b>State to simulate oauth (needs returnURL)</b></p></td>
+            <td class="rightColumn"><input id='oauthState' name='oauthState' type='text'/></td>
+        </tr>
         <tr>
             <td colspan="2">
                 <input id='submitButton' type='submit' value='Request Access'>
@@ -130,6 +137,7 @@
             <td class="rightColumn"><p id="tokenArea"></p></td>
         </tr>
     </table>
+
     <div class="consoleDiv">
         <h3>Console</h3>
         <textarea id="console" cols="150" rows="10"></textarea>
