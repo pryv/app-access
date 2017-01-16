@@ -53,6 +53,31 @@
             <td class="rightColumn"><p id="registerUrlText"></p></td>
         </tr>
         <tr>
+            <td class="leftColumn"><p><b>Rec-La Dev</b></p></td>
+            <td class="rightColumn"><input name='reclaDevel' id='reclaDevel' value=':4443/v2/access.html'/></td>
+        </tr>
+        <tr>
+            <td class="leftColumn"><p><b>Force Polling</b></p></td>
+            <td class="rightColumn"><input type='checkbox' name='forcePolling' id='forcePolling' /></td>
+        </tr>
+        <tr>
+            <td class="leftColumn"><p><b>Language</b></p></td>
+            <td class="rightColumn">
+                <select name='languageCode' id='languageCode' />
+                <option value="">_Browser_</option>
+                <option value="en">English</option>
+                <option value="fr">French</option> </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="leftColumn"><p><b>Return URL (opt)</b></p></td>
+            <td class="rightColumn"><input id='returnURL' name='returnURL' type='text' value='auto#'/></td>
+        </tr>
+        <tr>
+            <td class="leftColumn"><p><b>State to simulate oauth (needs returnURL)</b></p></td>
+            <td class="rightColumn"><input id='oauthState' name='oauthState' type='text'/></td>
+        </tr>
+        <tr>
             <td class="leftColumn"><p><b>Application ID</b> (min length: 6)</p></td>
             <td class="rightColumn"><input id='requestingAppId' type='text' placeholder='Insert your Application ID'/></td>
         </tr>

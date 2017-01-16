@@ -166,6 +166,14 @@ function requestAccess() {
     pryv.Auth.config.registerURL = {host: customRegisterUrl, 'ssl': true};
   }
 
+  // Rec-la config, only for dev
+  if ($('#reclaDevel').val().length > 0) {
+    Pryv.Access.config.reclaDevel = $('#reclaDevel').val();
+  } else {
+    Pryv.Access.config.reclaDevel = false;
+  }
+  Pryv.Access._init(); //because we change the config
+
   var settings = {
     requestingAppId: false,
     languageCode: false,
@@ -174,6 +182,12 @@ function requestAccess() {
     callbacks: {}
   };
   settings.requestingAppId = $('#requestingAppId').val();
+
+  // Dev and advanced settings
+  settings.languageCode = $('#languageCode option:selected').val();
+  settings.returnURL = $('#returnURL').val();
+  settings.oauthState = $('#oauthState').val();
+  settings.forcePolling = $('#forcePolling').attr('checked') == 'checked';
 
   try {
     settings.requestedPermissions = JSON.parse($('#permissionsArea').val());
