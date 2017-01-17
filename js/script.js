@@ -186,6 +186,10 @@ function requestAccess() {
   };
   settings.requestingAppId = $('#requestingAppId').val();
 
+  if(settings.requestingAppId.length < 6) {
+    return alert('RequestingAppId is invalid!');
+  }
+
   // Dev and advanced settings
   settings.languageCode = $('#languageCode option:selected').val();
   settings.returnURL = $('#returnURL').val();
