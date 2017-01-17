@@ -172,11 +172,11 @@ function requestAccess() {
 
   // Rec-la config, only for dev
   if ($('#reclaDevel').val().length > 0) {
-    pryv.Access.config.reclaDevel = $('#reclaDevel').val();
+    pryv.Auth.config.reclaDevel = $('#reclaDevel').val();
   } else {
-    pryv.Access.config.reclaDevel = false;
+    pryv.Auth.config.reclaDevel = false;
   }
-  pryv.Access._init(); //because we change the config
+  pryv.Auth._init(); //because we change the config
 
   var settings = {
     requestingAppId: false,
