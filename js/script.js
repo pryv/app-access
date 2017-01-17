@@ -176,7 +176,6 @@ function requestAccess() {
   } else {
     pryv.Auth.config.reclaDevel = false;
   }
-  pryv.Auth._init(); //because we change the config
 
   var settings = {
     requestingAppId: false,
