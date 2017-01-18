@@ -59,7 +59,7 @@
         </tr>
         <tr>
             <td class="leftColumn">
-                <p><b>Permissions</b></p>
+                <p><b>Permissions</b> (See <a href="http://api.pryv.com/reference/#authorizing-your-app" target="_blank">API doc</a>)</p>
                 <div class="checkboxDiv">
                     <input type="checkbox" name="masterToken" id="masterToken">
                     <label for="masterToken">Master Token</label>
@@ -68,20 +68,7 @@
             <td class="rightColumn">
                 <div id="permissionsViewInactive"></div>
                 <div id="permissionsViewActive">
-                    <div class="addStreamDiv">
-                        <input id='streamId' type='text' placeholder='StreamId'/><br>
-                        <select id="level">
-                            <option value="read">Read</option>
-                            <option value="contribute">Contribute</option>
-                            <option value="manage">Manage</option>
-                        </select><br>
-                        <input id='name' type='text' placeholder='Name (optional)'/><br>
-                        <input id='addPermission' type="button" value="Add">
-                        <input id='clearPermissionArea' type="button" value="Clear">
-                    </div>
-                    <div class="streamListDiv">
-                        <textarea id='permissionsArea'></textarea>
-                    </div>
+                    <textarea id='permissionsArea'></textarea>
                 </div>
             </td>
         </tr>
