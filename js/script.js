@@ -19,7 +19,7 @@ window.onload = function () {
 
 
   permissionsAreaState(false);
-  $regUrlText.text(getRegisterURL());
+  $regUrlText.text(getRegisterURL() || pryv.Auth.config.registerURL.host);
   $masterToken.prop('checked', false);
   $permissionsArea.val(JSON.stringify(defaultPermissions, null, '  '));
 
