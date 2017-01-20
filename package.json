@@ -11,7 +11,7 @@
     "url": "https://github.com/pryv/app-web-access"
   },
   "dependencies": {
-    "pryv": "git://github.com/pryv/lib-javascript.git#refactor/fix-tests"
+    "pryv": "latest"
   },
   "devDependencies": {
     "grunt": "latest",
