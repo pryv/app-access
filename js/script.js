@@ -10,23 +10,15 @@ var defaultPermissions = [{
 }];
 
 window.onload = function () {
-  var $permissionsArea = $('#permissionsArea'),
-    $clearButton= $('#clearPermissionArea'),
-    $addPermission = $('#addPermission'),
-    $regUrlText = $('#registerUrlText'),
-    $submitButton = $('#submitButton'),
-    $masterToken = $('#masterToken');
-
-
+  var $masterToken = $('#masterToken');
   permissionsAreaState(false);
-  $regUrlText.text(getRegisterURL() || pryv.Auth.config.registerURL.host);
+  $('#registerUrlText').val(pryv.Auth.config.registerURL.host);
   $masterToken.prop('checked', false);
-  $permissionsArea.val(JSON.stringify(defaultPermissions, null, '  '));
-
+  $('#permissionsArea').val(JSON.stringify(defaultPermissions, null, '  '));
   $masterToken.click(masterTokenManagement);
-  $addPermission.click(addPermission);
-  $submitButton.click(requestAccess);
-  $clearButton.click(clearPermissions);
+  $('#addPermission').click(addPermission);
+  $('#submitButton').click(requestAccess);
+  $('#clearPermissionArea').click(clearPermissions);
 
   // Toggle dev options
   toggleDevOptions();
@@ -152,17 +144,10 @@ function logToConsole(text) {
 }
 
 /**
- * retrieve the registerURL from URL parameters
- */
-function getRegisterURL() {
-  return pryv.utility.urls.parseClientURL().parseQuery()['pryv-reg'];
-}
-
-/**
  * process the form and request access
  */
 function requestAccess() {
-  var customRegisterUrl = getRegisterURL(),
+  var customRegisterUrl = $('#registerUrlText').val(),
     $username = $('#usernameArea'),
     $token = $('#tokenArea');
 
