@@ -12,7 +12,8 @@ var defaultPermissions = [{
 window.onload = function () {
   var $masterToken = $('#masterToken');
   permissionsAreaState(false);
-  $('#registerUrlText').val(pryv.Auth.config.registerURL.host);
+  $('#registerUrlText').text(pryv.utility.urls.parseClientURL().hash.replace('#','') ||
+    pryv.Auth.config.registerURL.host);
   $masterToken.prop('checked', false);
   $('#permissionsArea').val(JSON.stringify(defaultPermissions, null, '  '));
   $masterToken.click(masterTokenManagement);
@@ -147,7 +148,7 @@ function logToConsole(text) {
  * process the form and request access
  */
 function requestAccess() {
-  var customRegisterUrl = $('#registerUrlText').val(),
+  var customRegisterUrl = $('#registerUrlText').text(),
     $username = $('#usernameArea'),
     $token = $('#tokenArea');
 
