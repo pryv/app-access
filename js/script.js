@@ -12,7 +12,8 @@ var defaultPermissions = [{
 window.onload = function () {
   var $masterToken = $('#masterToken');
   permissionsAreaState(false);
-  $('#registerUrlText').text(pryv.utility.urls.parseClientURL().hash.replace('#','') ||
+  var url = pryv.utility.urls.parseClientURL().hash;
+  $('#registerUrlText').text(url.substring(url.lastIndexOf('#')+1,url.lastIndexOf('?')) ||
     pryv.Auth.config.registerURL.host);
   $masterToken.prop('checked', false);
   $('#permissionsArea').val(JSON.stringify(defaultPermissions, null, '  '));
