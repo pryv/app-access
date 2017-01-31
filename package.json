@@ -4,7 +4,8 @@
   "version": "2.0.0",
   "description": "This is a web app to generate pryv access tokens.",
   "scripts": {
-    "grunt": "grunt"
+    "grunt": "grunt",
+    "webserver": "node node_modules/rec-la/webserver/main.js ./dist 4444"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
     "grunt-contrib-clean": "latest",
     "grunt-build-gh-pages": "latest",
     "grunt-shell": "latest",
-    "grunt-cli": "latest"
+    "grunt-cli": "latest",
+    "rec-la": "latest"
   }
 }
