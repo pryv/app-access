@@ -216,7 +216,7 @@ function requestAccess() {
 function toggleDevOptions() {
   $('#languageCode').parent().parent().toggle();
   $('#returnURL').parent().parent().toggle();
-  $('#oauthState').parent().parent().toggle();
+  $('#oauthState').parent().parent().hide();
   $('#forcePolling').parent().parent().toggle();
   $('#reclaDevel').parent().parent().toggle();
   }
