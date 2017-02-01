@@ -9,6 +9,9 @@ var defaultPermissions = [{
   level : 'read'
 }];
 
+/**
+ * Initialize access page
+ */
 window.onload = function () {
   var $masterToken = $('#masterToken');
   permissionsAreaState(false);
@@ -28,7 +31,7 @@ window.onload = function () {
 };
 
 /**
- * change view and permissions to fit a master token app access
+ * Change view and permissions to fit a master token app access
  */
 function masterTokenManagement() {
   var $permissionsViewInactive = $('#permissionsViewInactive'),
@@ -55,8 +58,8 @@ function masterTokenManagement() {
 }
 
 /**
- * disable/activate inputs for permissions area
- * @param state {Boolean}
+ * Disable/activate inputs for permissions area
+ * @param state {Boolean}: activation state
  */
 function permissionsAreaState(state) {
   var $addPermission = $('#addPermission'),
@@ -75,7 +78,7 @@ function permissionsAreaState(state) {
 }
 
 /**
- * manage the add permission button
+ * Manage the add permission button
  */
 function addPermission() {
   var $permissionsArea = $('#permissionsArea'),
@@ -117,13 +120,18 @@ function addPermission() {
   }
 }
 
+/**
+ * Add a new permission to the permissions list
+ * @param newPermission: the new permission
+ * @returns {string}: the new list of permissions (as a string)
+ */
 String.prototype.addNewPermission = function(newPermission) {
   return this.replace('\n]', ',\n' + newPermission.substring(2, newPermission.length ));
 };
 
 
 /**
- * manage the clear permissions button
+ * Manage the clear permissions button
  */
 function clearPermissions() {
   var $permissionsArea = $('#permissionsArea');
@@ -133,8 +141,8 @@ function clearPermissions() {
 
 
 /**
- * prints to console a message/error
- * @param text {String}
+ * Prints to console a message/error
+ * @param text {String}: the message to print
  */
 function logToConsole(text) {
   var $console = $('#console');
@@ -146,7 +154,7 @@ function logToConsole(text) {
 }
 
 /**
- * process the form and request access
+ * Process the form and request access
  */
 function requestAccess() {
   var customRegisterUrl = $('#registerUrlText').text(),
@@ -155,13 +163,6 @@ function requestAccess() {
 
   if (customRegisterUrl) {
     pryv.Auth.config.registerURL = {host: customRegisterUrl, 'ssl': true};
-  }
-
-  // Rec-la config, only for dev
-  if ($('#reclaDevel').val().length > 0) {
-    pryv.Auth.config.reclaDevel = $('#reclaDevel').val();
-  } else {
-    pryv.Auth.config.reclaDevel = false;
   }
 
   var settings = {
@@ -182,6 +183,13 @@ function requestAccess() {
   settings.returnURL = $('#returnURL').val();
   settings.oauthState = $('#oauthState').val();
   settings.forcePolling = $('#forcePolling').attr('checked') === 'checked';
+
+  // Rec-la config for local dev
+  if ($('#reclaDevel').val().length > 0) {
+    pryv.Auth.config.reclaDevel = $('#reclaDevel').val();
+  } else {
+    pryv.Auth.config.reclaDevel = false;
+  }
 
   try {
     settings.requestedPermissions = JSON.parse($('#permissionsArea').val());
@@ -213,6 +221,9 @@ function requestAccess() {
   }
 }
 
+/**
+ * Hide/show advanced dev. options panel
+ */
 function toggleDevOptions() {
   $('#languageCode').parent().parent().toggle();
   $('#returnURL').parent().parent().toggle();
