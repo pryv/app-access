@@ -14,7 +14,8 @@ Example: [http://pryv.github.io/app-web-access/?pryv-reg=reg.pryv.me](http://pry
 
 * Download dependencies with `npm install`.
 * Generate web app with `npm run grunt`.
-* Open the file `dist/index.html?pryv-reg={custom register URL}`.
+* Run the local server with `npm run webserver`.
+* Open https://l.rec.la:4444/
 
 ## License
 
