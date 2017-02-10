@@ -181,7 +181,6 @@ function requestAccess() {
   settings.languageCode = $('#languageCode option:selected').val();
   settings.returnURL = $('#returnURL').val();
   settings.oauthState = $('#oauthState').val();
-  settings.forcePolling = $('#forcePolling').attr('checked') === 'checked';
 
   // Rec-la config for local dev
   if ($('#reclaDevel').val().length > 0) {
@@ -227,6 +226,5 @@ function toggleDevOptions() {
   $('#languageCode').parent().parent().toggle();
   $('#returnURL').parent().parent().toggle();
   $('#oauthState').parent().parent().hide();
-  $('#forcePolling').parent().parent().toggle();
   $('#reclaDevel').parent().parent().toggle();
   }
