@@ -27,6 +27,8 @@ window.onload = function () {
   // Toggle dev options
   toggleDevOptions();
   $('#toggleDev').click(toggleDevOptions);
+
+  requestAccess();
 };
 
 /**
