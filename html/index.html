@@ -44,8 +44,6 @@
         Edit the fields <b>StreamId</b>, <b>Level</b> and <b>defaultName</b> in the text box containing a JSON array where each item represents a Permission that will be requested upon successful authentication.<br><br>
 
         If the <b>Master Token</b> option is checked, it will set the level <b>manage</b> on all streams for the selected application.<br><br>
-
-        Use the <b>Clear</b> button to erase the content of the Permissions text box.
     </div>
 
     <table>
@@ -81,14 +79,16 @@
         <tr>
             <td class="leftColumn">
                 <p><b>Authorization popup</b></p>
-                <p>To run on local app-web-auth: :4443/v2/access.html</p></td>
+                    <input type="checkbox" name="localAuth" id="localAuth">
+                    <label for="localAuth">Click to run on local app-web-auth (port 4443)</label>
+            </td>
             <td class="rightColumn"><input name='reclaDevel' id='reclaDevel' type='text'/></td>
         </tr>
         <tr>
             <td class="leftColumn"><p><b>Language</b></p></td>
             <td class="rightColumn">
                 <select name='languageCode' id='languageCode' />
-                <option value="">_Browser_</option>
+                <option value="default">Browser</option>
                 <option value="en">English</option>
                 <option value="fr">French</option> </select>
             </td>
