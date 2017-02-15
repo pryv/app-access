@@ -26,5 +26,8 @@
     "grunt-shell": "latest",
     "grunt-cli": "latest",
     "rec-la": "latest"
+  },
+  "engines": {
+    "node": ">=4.0.0"
   }
 }
