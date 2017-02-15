@@ -3,164 +3,118 @@
 var $ = require('jquery'),
   pryv = require('pryv');
 
+var masterToken,
+  localAuth,
+  reclaDevel,
+  lang,
+  returnURL,
+  console,
+  registerUrlText,
+  permissionsArea,
+  oauthState,
+  submitButton,
+  toggleDev,
+  permissionsViewInactive,
+  usernameArea,
+  tokenArea,
+  requestingAppId;
+
 var defaultPermissions = [{
   streamId : 'diary',
   defaultName : 'Journal',
   level : 'read'
 }];
 
+/**
+ * Initialize access page
+ */
 window.onload = function () {
-  var $permissionsArea = $('#permissionsArea'),
-    $clearButton= $('#clearPermissionArea'),
-    $addPermission = $('#addPermission'),
-    $regUrlText = $('#registerUrlText'),
-    $submitButton = $('#submitButton'),
-    $masterToken = $('#masterToken');
-
+  // Load ressources
+  masterToken = $('#masterToken');
+  localAuth = $('#localAuth');
+  reclaDevel = $('#reclaDevel');
+  lang = $('#languageCode');
+  returnURL = $('#returnURL');
+  console = $('#console');
+  registerUrlText = $('#registerUrlText');
+  permissionsArea = $('#permissionsArea');
+  oauthState = $('#oauthState');
+  submitButton = $('#submitButton');
+  toggleDev = $('#toggleDev');
+  permissionsViewInactive = $('#permissionsViewInactive');
+  usernameArea = $('#usernameArea');
+  tokenArea = $('#tokenArea');
+  requestingAppId = $('#requestingAppId');
 
   permissionsAreaState(false);
-  $regUrlText.text(getRegisterURL());
-  $masterToken.prop('checked', false);
-  $permissionsArea.val(JSON.stringify(defaultPermissions, null, '  '));
+  registerUrlText.text(pryv.utility.urls.parseClientURL().parseQuery()['pryv-reg'] ||
+    pryv.Auth.config.registerURL.host);
+  masterToken.prop('checked', false);
+  permissionsArea.val(JSON.stringify(defaultPermissions, null, '  '));
+  masterToken.click(masterTokenManagement);
+  submitButton.click(requestAccess);
 
-  $masterToken.click(masterTokenManagement);
-  $addPermission.click(addPermission);
-  $submitButton.click(requestAccess);
-  $clearButton.click(clearPermissions);
+  // Toggle dev options
+  toggleDevOptions();
+  toggleDev.click(toggleDevOptions);
+
+  // Local setup for auth popup
+  localAuth.click(function() {
+    reclaDevel.val(localAuth.is(':checked') ? ':4443/v2/access.html' : '');
+  });
+
+  requestAccess();
 };
 
 /**
- * change view and permissions to fit a master token app access
+ * Change view and permissions to fit a master token app access
  */
 function masterTokenManagement() {
-  var $permissionsViewInactive = $('#permissionsViewInactive'),
-    $permissionsArea = $('#permissionsArea'),
-    masterTokenPermissions = [{
+  var masterTokenPermissions = [{
       streamId: '*',
       level: 'manage'
     }];
 
-  if ($('#masterToken:checked').length === 1) {
+  if (masterToken.is(':checked')) {
     try {
-      defaultPermissions = JSON.parse($permissionsArea.val());
-      $permissionsArea.val(JSON.stringify(masterTokenPermissions, null, '  '));
+      defaultPermissions = JSON.parse(permissionsArea.val());
+      permissionsArea.val(JSON.stringify(masterTokenPermissions, null, '  '));
       permissionsAreaState(true);
-      $permissionsViewInactive.css({'display': 'unset'});
+      permissionsViewInactive.css({'display': 'unset'});
     } catch (err) {
       logToConsole(err);
     }
   } else {
-    $permissionsViewInactive.css({'display': 'none'});
+    permissionsViewInactive.css({'display': 'none'});
     permissionsAreaState(false);
-    $permissionsArea.val(JSON.stringify(defaultPermissions, null, '  '));
+    permissionsArea.val(JSON.stringify(defaultPermissions, null, '  '));
   }
 }
 
 /**
- * disable/activate inputs for permissions area
- * @param state {Boolean}
+ * Disable/activate inputs for permissions area
+ * @param state {Boolean}: activation state
  */
 function permissionsAreaState(state) {
-  var $addPermission = $('#addPermission'),
-    $permissionsArea = $('#permissionsArea'),
-    $clearButton= $('#clearPermissionArea'),
-    $streamId = $('#streamId'),
-    $level = $('#level'),
-    $name = $('#name');
-
-  $permissionsArea.prop('disabled', state);
-  $addPermission.prop('disabled', state);
-  $clearButton.prop('disabled', state);
-  $streamId.prop('disabled', state);
-  $level.prop('disabled', state);
-  $name.prop('disabled', state);
+  permissionsArea.prop('disabled', state);
 }
 
 /**
- * manage the add permission button
- */
-function addPermission() {
-  var $permissionsArea = $('#permissionsArea'),
-    $streamId = $('#streamId'),
-    $level = $('#level option:selected'),
-    $name = $('#name'),
-    permission;
-
-  if (!$streamId.val()) {
-    return logToConsole('Error: A streamId is required to submit a permission.');
-  }
-  if (!$level.val()) {
-    return logToConsole('Error: A level is required to submit a permission.');
-  }
-
-  if ($name.val()) {
-    permission = [{
-      streamId: $streamId.val(),
-      defaultName: $name.val(),
-      level: $level.val()
-    }];
-  } else {
-    permission = [{
-      streamId: $streamId.val(),
-      level: $level.val()
-    }];
-  }
-
-  if ($permissionsArea.val()) {
-    $permissionsArea.val(
-      $permissionsArea.val().addNewPermission(JSON.stringify(permission, null, '  '))
-    );
-  } else {
-    $permissionsArea.val(JSON.stringify(permission, null, '  '));
-  }
-
-  if ($permissionsArea.length) {
-    $permissionsArea.scrollTop($permissionsArea[0].scrollHeight - $permissionsArea.height());
-  }
-}
-
-String.prototype.addNewPermission = function(newPermission) {
-  return this.replace('\n]', ',\n' + newPermission.substring(2, newPermission.length ));
-};
-
-
-/**
- * manage the clear permissions button
- */
-function clearPermissions() {
-  var $permissionsArea = $('#permissionsArea');
-
-  $permissionsArea.val('');
-}
-
-
-/**
- * prints to console a message/error
- * @param text {String}
+ * Prints to console a message/error
+ * @param text {String}: the message to print
  */
 function logToConsole(text) {
-  var $console = $('#console');
-
-  $console.append(text + '\n');
-  if($console.length) {
-    $console.scrollTop($console[0].scrollHeight - $console.height());
+  console.append(text + '\n');
+  if(console.length) {
+    console.scrollTop(console[0].scrollHeight - console.height());
   }
 }
 
 /**
- * retrieve the registerURL from URL parameters
- */
-function getRegisterURL() {
-  return pryv.utility.urls.parseClientURL().parseQuery()['pryv-reg'];
-}
-
-/**
- * process the form and request access
+ * Process the form and request access
  */
 function requestAccess() {
-  var customRegisterUrl = getRegisterURL(),
-    $username = $('#usernameArea'),
-    $token = $('#tokenArea');
+  var customRegisterUrl = registerUrlText.text();
 
   if (customRegisterUrl) {
     pryv.Auth.config.registerURL = {host: customRegisterUrl, 'ssl': true};
@@ -173,10 +127,22 @@ function requestAccess() {
     returnURL: false,
     callbacks: {}
   };
-  settings.requestingAppId = $('#requestingAppId').val();
+  settings.requestingAppId = requestingAppId.val();
+
+  if(settings.requestingAppId.length < 6) {
+    return alert('RequestingAppId is invalid!');
+  }
+
+  // Dev and advanced settings
+  settings.languageCode = lang.val();
+  settings.returnURL = returnURL.val();
+  settings.oauthState = oauthState.val();
+
+  // Rec-la config for local dev
+  pryv.Auth.config.reclaDevel = (reclaDevel.val().length > 0) ? reclaDevel.val() : false;
 
   try {
-    settings.requestedPermissions = JSON.parse($('#permissionsArea').val());
+    settings.requestedPermissions = JSON.parse(permissionsArea.val());
     settings.spanButtonID = 'pryvButton';
 
     settings.callbacks.initialization = function () {
@@ -189,8 +155,8 @@ function requestAccess() {
       logToConsole(
         'Access generation successful, please copy the token to be used with ' +
         'the associated username.');
-      $username.text(username);
-      $token.text(appToken);
+      usernameArea.text(username);
+      tokenArea.text(appToken);
     };
     settings.callbacks.refused = function (reason) {
       logToConsole('Access refused by user' + reason);
@@ -203,4 +169,18 @@ function requestAccess() {
   } catch (e) {
     logToConsole('Error in Access params: ' + e);
   }
+}
+
+/**
+ * Hide/show advanced dev. options panel and reset to default values
+ */
+function toggleDevOptions() {
+  returnURL.val('auto#');
+  reclaDevel.val('');
+  localAuth.prop('checked', false);
+  lang.val('default');
+  lang.parent().parent().toggle();
+  returnURL.parent().parent().toggle();
+  reclaDevel.parent().parent().toggle();
+  oauthState.parent().parent().hide();
 }
