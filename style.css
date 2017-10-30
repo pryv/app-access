@@ -1,5 +1,5 @@
 body {
-    margin: 0px;
+    margin: auto;
     min-width: 800px;
     max-width: 1205px;
     font-size: 15px;
@@ -13,7 +13,8 @@ textarea {
     padding: 3px;
     font-size: 13px;
     font-family: inherit;
-    width: calc(100% - 4px);
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
 }
 
 table {
@@ -91,29 +92,6 @@ select {
     margin-bottom: 10px;
     box-sizing: border-box;
     border-bottom: 1px solid #9b9b9b;
-}
-
-.addStreamDiv {
-    width: 220px;
-    text-align: center;
-    margin-bottom: -2px;
-    vertical-align: top;
-    display: inline-block;
-    padding: 7px 10px 0px 10px;
-}
-
-.addStreamDiv input[type=text] {
-    padding-left: 5px;
-    margin-bottom: 5px;
-}
-
-.streamListDiv {
-    display: inline-block;
-    width: calc(100% - 250px);
-}
-
-.streamListDiv textarea {
-    height: 148px;
 }
 
 .checkboxDiv {

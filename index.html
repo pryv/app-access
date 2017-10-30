@@ -41,12 +41,11 @@
             <li><b>contribute</b>: Read and generate new content.</li>
             <li><b>manage</b>: Contribute, update and delete.</li>
         </ul>
-        Fill the fields <b>StreamId</b>, <b>Level</b> and <b>defaultName</b> (optional) and press the <b>Add</b> button to add a permission or edit the text box directly with a JSON array where each item contains the aforementioned fields.<br><br>
+        Edit the fields <b>StreamId</b>, <b>Level</b> and <b>defaultName</b> in the text box containing a JSON array where each item represents a Permission that will be requested upon successful authentication.<br><br>
 
         If the <b>Master Token</b> option is checked, it will set the level <b>manage</b> on all streams for the selected application.<br><br>
-
-        Use the <b>Clear</b> button to erase the content of the Permissions text box.
     </div>
+
     <table>
         <tr>
             <td class="leftColumn"><p><b>Register URL</b></p></td>
@@ -54,11 +53,11 @@
         </tr>
         <tr>
             <td class="leftColumn"><p><b>Application ID</b> (min length: 6)</p></td>
-            <td class="rightColumn"><input id='requestingAppId' type='text' placeholder='Insert your Application ID'/></td>
+            <td class="rightColumn"><input id='requestingAppId' type='text' value='app-web-access-test'/></td>
         </tr>
         <tr>
             <td class="leftColumn">
-                <p><b>Permissions</b></p>
+                <p><b>Permissions</b> (See <a href="http://api.pryv.com/reference/#authorizing-your-app" target="_blank">API doc</a>)</p>
                 <div class="checkboxDiv">
                     <input type="checkbox" name="masterToken" id="masterToken">
                     <label for="masterToken">Master Token</label>
@@ -67,22 +66,44 @@
             <td class="rightColumn">
                 <div id="permissionsViewInactive"></div>
                 <div id="permissionsViewActive">
-                    <div class="addStreamDiv">
-                        <input id='streamId' type='text' placeholder='StreamId'/><br>
-                        <select id="level">
-                            <option value="read">Read</option>
-                            <option value="contribute">Contribute</option>
-                            <option value="manage">Manage</option>
-                        </select><br>
-                        <input id='name' type='text' placeholder='Name (optional)'/><br>
-                        <input id='addPermission' type="button" value="Add">
-                        <input id='clearPermissionArea' type="button" value="Clear">
-                    </div>
-                    <div class="streamListDiv">
-                        <textarea id='permissionsArea'></textarea>
-                    </div>
+                    <textarea id='permissionsArea'></textarea>
                 </div>
             </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <button id="toggleDev">Show/hide advanced options</button>
+            </td>
+        </tr>
+        <tr>
+            <td class="leftColumn">
+                <p><b>Authorization popup</b></p>
+                    <input type="checkbox" name="localAuth" id="localAuth">
+                    <label for="localAuth">Run on local web-auth (port 4443)</label>
+            </td>
+            <td class="rightColumn"><input name='reclaDevel' id='reclaDevel' type='text'/></td>
+        </tr>
+        <tr>
+            <td class="leftColumn"><p><b>Language</b></p></td>
+            <td class="rightColumn">
+                <select name='languageCode' id='languageCode' />
+                <option value="default">Browser</option>
+                <option value="en">English</option>
+                <option value="fr">French</option> </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="leftColumn">
+                <p><b>Return URL (postlogin url)</b></p>
+                <p>auto# by default</p>
+                <p>self# or other url to avoid popup</p>
+            </td>
+            <td class="rightColumn"><input id='returnURL' name='returnURL' type='text' value='auto#'/></td>
+        </tr>
+        <tr>
+            <td class="leftColumn"><p><b>State to simulate oauth</b></br>(needs returnURL)</p></td>
+            <td class="rightColumn"><input id='oauthState' name='oauthState' type='text'/></td>
         </tr>
         <tr>
             <td colspan="2">
@@ -92,7 +113,7 @@
         <tr>
             <td colspan="2">
                 <div id="pryvButtonHolder">
-                    <span id='pryvButton'></span>
+                    <center><span id='pryvButton'></span></center>
                 </div>
             </td>
         </tr>
@@ -105,9 +126,10 @@
             <td class="rightColumn"><p id="tokenArea"></p></td>
         </tr>
     </table>
+
     <div class="consoleDiv">
         <h3>Console</h3>
-        <textarea id="console" cols="150" rows="10"></textarea>
+        <textarea id="console" cols="150" rows="10" readonly></textarea>
     </div>
 </div>
 </body>
