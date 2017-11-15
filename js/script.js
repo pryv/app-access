@@ -17,7 +17,9 @@ var masterToken,
   permissionsViewInactive,
   usernameArea,
   tokenArea,
-  requestingAppId;
+  requestingAppId,
+  registerHostname,
+  pryvDomain;
 
 var defaultPermissions = [{
   streamId : 'diary',
@@ -47,8 +49,10 @@ window.onload = function () {
   requestingAppId = $('#requestingAppId');
 
   permissionsAreaState(false);
-  registerUrlText.text(pryv.utility.urls.parseClientURL().parseQuery()['pryv-reg'] ||
-    pryv.Auth.config.registerURL.host);
+  registerHostname = pryv.utility.urls.parseClientURL().parseQuery()['pryv-reg'] ||
+    pryv.Auth.config.registerURL.host;
+  pryvDomain = registerHostname.split('.').splice(1,3).join('.');
+  registerUrlText.text(registerHostname);
   masterToken.prop('checked', false);
   permissionsArea.val(JSON.stringify(defaultPermissions, null, '  '));
   masterToken.click(masterTokenManagement);
@@ -60,7 +64,7 @@ window.onload = function () {
 
   // Local setup for auth popup
   localAuth.click(function() {
-    reclaDevel.val(localAuth.is(':checked') ? ':4443/v2/access.html' : '');
+    reclaDevel.val(localAuth.is(':checked') ? ':4443/' + pryvDomain + '/access.html' : '');
   });
 
   requestAccess();
