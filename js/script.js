@@ -67,7 +67,6 @@ window.onload = function () {
     reclaDevel.val(localAuth.is(':checked') ? ':4443/' + pryvDomain + '/access.html' : '');
   });
 
-  requestAccess();
 };
 
 /**
