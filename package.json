@@ -15,8 +15,7 @@
     "pryv": "git://github.com/pryv/lib-javascript.git"
   },
   "devDependencies": {
-    "grunt": "^1.0.2",
-    "grunt-contrib-nodeunit": "^1.0.0",
+    "grunt": "latest",
     "grunt-browserify": "latest",
     "grunt-build-gh-pages": "latest",
     "grunt-cli": "latest",
