@@ -17,6 +17,7 @@ var masterToken,
   permissionsViewInactive,
   usernameArea,
   tokenArea,
+  domainArea,
   requestingAppId,
   registerHostname,
   pryvDomain;
@@ -46,6 +47,7 @@ window.onload = function () {
   permissionsViewInactive = $('#permissionsViewInactive');
   usernameArea = $('#usernameArea');
   tokenArea = $('#tokenArea');
+  domainArea = $('#domainArea');
   requestingAppId = $('#requestingAppId');
 
   permissionsAreaState(false);
@@ -154,12 +156,13 @@ function requestAccess() {
     settings.callbacks.needSignin = function () {
       logToConsole('Access parameters validated, please sign in.');
     };
-    settings.callbacks.accepted = function (username, appToken) {
+    settings.callbacks.signedIn = function (connection) {
       logToConsole(
         'Access generation successful, please copy the token to be used with ' +
         'the associated username.');
-      usernameArea.text(username);
-      tokenArea.text(appToken);
+      usernameArea.text(connection.username);
+      tokenArea.text(connection.auth);
+      domainArea.text(connection.domain);
     };
     settings.callbacks.refused = function (reason) {
       logToConsole('Access refused by user' + reason);

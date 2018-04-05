@@ -15,16 +15,17 @@
     "pryv": "git://github.com/pryv/lib-javascript.git"
   },
   "devDependencies": {
-    "grunt": "latest",
-    "jquery": "latest",
+    "grunt": "^1.0.2",
+    "grunt-contrib-nodeunit": "^1.0.0",
     "grunt-browserify": "latest",
+    "grunt-build-gh-pages": "latest",
+    "grunt-cli": "latest",
+    "grunt-contrib-clean": "latest",
     "grunt-contrib-copy": "latest",
     "grunt-contrib-jshint": "latest",
     "grunt-contrib-watch": "latest",
-    "grunt-contrib-clean": "latest",
-    "grunt-build-gh-pages": "latest",
     "grunt-shell": "latest",
-    "grunt-cli": "latest",
+    "jquery": "latest",
     "rec-la": "latest"
   },
   "engines": {
