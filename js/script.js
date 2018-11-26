@@ -11,6 +11,7 @@ var masterToken,
   console,
   registerUrlText,
   permissionsArea,
+  clientDataArea,
   oauthState,
   submitButton,
   toggleDev,
@@ -41,6 +42,7 @@ window.onload = function () {
   console = $('#console');
   registerUrlText = $('#registerUrlText');
   permissionsArea = $('#permissionsArea');
+  clientDataArea = $('#clientDataArea');
   oauthState = $('#oauthState');
   submitButton = $('#submitButton');
   toggleDev = $('#toggleDev');
@@ -148,6 +150,7 @@ function requestAccess() {
 
   try {
     settings.requestedPermissions = JSON.parse(permissionsArea.val());
+    settings.clientData = JSON.parse(clientDataArea.val());
     settings.spanButtonID = 'pryvButton';
 
     settings.callbacks.initialization = function () {
@@ -189,4 +192,5 @@ function toggleDevOptions() {
   returnURL.parent().parent().toggle();
   reclaDevel.parent().parent().toggle();
   oauthState.parent().parent().hide();
+  clientDataArea.parent().parent().toggle();
 }
