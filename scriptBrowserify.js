@@ -49339,7 +49339,13 @@ function requestAccess() {
 
   try {
     settings.requestedPermissions = JSON.parse(permissionsArea.val());
-    settings.clientData = JSON.parse(clientDataArea.val());
+    
+    // Add clientData if any
+    var clientData = clientDataArea.val();
+    if (clientData.length > 0) {
+      settings.clientData = JSON.parse(clientData);
+    }
+
     settings.spanButtonID = 'pryvButton';
 
     settings.callbacks.initialization = function () {
