@@ -106,8 +106,14 @@
             <td class="rightColumn"><input id='oauthState' name='oauthState' type='text'/></td>
         </tr>
         <tr>
-            <td class="leftColumn"><p><b>ClientData</b></p></td>
-            <td class="rightColumn"><textarea rows="8" id='clientDataArea'>{}</textarea></td>
+            <td class="leftColumn">
+                <p><b>ClientData</b></p>
+                <p>a JSON object, for example :
+                <textarea rows="4" readonly>{"app-web-auth:description": {"type": "note/txt","content": "This is a consent message."}}
+                </textarea>
+                </p>
+            </td>
+            <td class="rightColumn"><textarea rows="8" id='clientDataArea'></textarea></td>
         </tr>
         <tr>
             <td colspan="2">
