@@ -49360,7 +49360,7 @@ function requestAccess() {
         'the associated username.');
       usernameArea.text(connection.username);
       tokenArea.text(connection.auth);
-      domainArea.text(connection.domain);
+      domainArea.text(pryvDomain);
     };
     settings.callbacks.refused = function (reason) {
       logToConsole('Access refused by user' + reason);
