@@ -48,7 +48,7 @@ window.onload = function () {
   requestingAppId = $('#requestingAppId');
 
   permissionsAreaState(false);
-  pryvServiceInfoUrl = Pryv.Auth.serviceInfoFromUrl() || 'https://reg.pryv.me/service/info';
+  pryvServiceInfoUrl = Pryv.Browser.serviceInfoFromUrl() || 'https://reg.pryv.me/service/info';
   serviceInfoUrlArea.val(pryvServiceInfoUrl);
   masterToken.prop('checked', false);
   permissionsArea.val(JSON.stringify(defaultPermissions, null, '  '));
@@ -148,18 +148,18 @@ function requestAccess() {
 
     settings.onStateChange = function (state) {
       logToConsole('##pryvAuthStateChange \t ' + JSON.stringify(state));
-      if (state.id === Pryv.Auth.States.AUTHORIZED) {
+      if (state.id === Pryv.Browser.AuthStates.AUTHORIZED) {
         apiEndpointArea.text(state.apiEndpoint);
         logToConsole('# Auth succeeded for user ' + state.apiEndpoint);
       }
-      if (state.id === Pryv.Auth.States.LOGOUT) {
+      if (state.id === Pryv.Browser.AuthStates.LOGOUT) {
         logToConsole('# Logout');
       }
     };
 
     settings.authRequest = authRequest;
 
-    Pryv.Auth.setup(settings, serviceInfoUrlArea.val());
+    Pryv.Browser.setupAuth(settings, serviceInfoUrlArea.val());
   } catch (e) {
     logToConsole('Error in Access params: ' + e);
   }
