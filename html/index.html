@@ -48,8 +48,8 @@
 
     <table>
         <tr>
-            <td class="leftColumn"><p><b>Register URL</b></p></td>
-            <td class="rightColumn"><p id="registerUrlText"></p></td>
+            <td class="leftColumn"><p><b>Service Info URL</b></p></td>
+            <td class="rightColumn"><input id='serviceInfoUrlArea' type='text' value='' /></td></p></td>
         </tr>
         <tr>
             <td class="leftColumn"><p><b>Application ID</b> (min length: 6)</p></td>
@@ -70,19 +70,24 @@
                 </div>
             </td>
         </tr>
-
+        <tr>
+            <td class="leftColumn">
+                <p><b>ClientData</b></p>
+                <p>a JSON object associated with the acces.
+                </p>
+            </td>
+            <td class="rightColumn"><textarea rows="8" id='clientDataArea'>
+{"app-web-auth:description": 
+    {
+        "type": "note/txt",
+        "content": "This is a consent message."
+    }
+}</textarea></td>
+        </tr>
         <tr>
             <td colspan="2">
                 <button id="toggleDev">Show/hide advanced options</button>
             </td>
-        </tr>
-        <tr>
-            <td class="leftColumn">
-                <p><b>Authorization popup</b></p>
-                    <input type="checkbox" name="localAuth" id="localAuth">
-                    <label for="localAuth">Run on local web-auth (port 4443)</label>
-            </td>
-            <td class="rightColumn"><input name='reclaDevel' id='reclaDevel' type='text'/></td>
         </tr>
         <tr>
             <td class="leftColumn"><p><b>Language</b></p></td>
@@ -106,16 +111,6 @@
             <td class="rightColumn"><input id='oauthState' name='oauthState' type='text'/></td>
         </tr>
         <tr>
-            <td class="leftColumn">
-                <p><b>ClientData</b></p>
-                <p>a JSON object, for example :
-                <textarea rows="4" readonly>{"app-web-auth:description": {"type": "note/txt","content": "This is a consent message."}}
-                </textarea>
-                </p>
-            </td>
-            <td class="rightColumn"><textarea rows="8" id='clientDataArea'></textarea></td>
-        </tr>
-        <tr>
             <td colspan="2">
                 <input id='submitButton' type='submit' value='Request Access'>
             </td>
@@ -128,16 +123,8 @@
             </td>
         </tr>
         <tr>
-            <td class="leftColumn"><p><b>Username</b></p></td>
-            <td class="rightColumn"><p id="usernameArea"></p></td>
-        </tr>
-        <tr>
-            <td class="leftColumn"><p><b>Access token</b></p></td>
-            <td class="rightColumn"><p id="tokenArea"></p></td>
-        </tr>
-        <tr>
-            <td class="leftColumn"><p><b>Domain</b></p></td>
-            <td class="rightColumn"><p id="domainArea"></p></td>
+            <td class="leftColumn"><p><b>pryvApiEndpoint</b></p></td>
+            <td class="rightColumn"><p id="apiEndpointArea"></p></td>
         </tr>
     </table>
 
