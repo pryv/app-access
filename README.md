@@ -4,7 +4,7 @@ Web app to generate a pryv [app access](http://api.pryv.com/concepts/#accesses) 
 
 ## Usage
 
-Pass a register name in the query parameter: `http://pryv.github.io/app-web-access/?pryvServiceInfoUrl={Url to service ino}` as per the [Autoconfiguration guidlines](https://api.pryv.com/guides/app-guidelines/)
+Pass a register name in the query parameter: `http://pryv.github.io/app-web-access/?pryvServiceInfoUrl={Url to service ino}` as per the [Autoconfiguration guidelines](https://api.pryv.com/guides/app-guidelines/)
 
 Example: [http://pryv.github.io/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info](http://pryv.github.io/app-web-access/?pryvServiceInfoUrl=https://reg.pryv.me/service/info)
 
