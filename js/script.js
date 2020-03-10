@@ -1,32 +1,29 @@
 /* global require */
 
 var $ = require('jquery'),
-  pryv = require('pryv');
+  Pryv = require('pryv');
 
 var masterToken,
-  localAuth,
-  reclaDevel,
   lang,
   returnURL,
   console,
-  registerUrlText,
+  serviceInfoUrlArea,
   permissionsArea,
   clientDataArea,
   oauthState,
   submitButton,
   toggleDev,
   permissionsViewInactive,
-  usernameArea,
+  apiEndpointArea,
   tokenArea,
   domainArea,
   requestingAppId,
-  registerHostname,
-  pryvDomain;
+  pryvServiceInfoUrl;
 
 var defaultPermissions = [{
-  streamId : 'diary',
-  defaultName : 'Journal',
-  level : 'read'
+  streamId: 'diary',
+  defaultName: 'Journal',
+  level: 'read'
 }];
 
 /**
@@ -35,28 +32,24 @@ var defaultPermissions = [{
 window.onload = function () {
   // Load ressources
   masterToken = $('#masterToken');
-  localAuth = $('#localAuth');
-  reclaDevel = $('#reclaDevel');
   lang = $('#languageCode');
   returnURL = $('#returnURL');
   console = $('#console');
-  registerUrlText = $('#registerUrlText');
+  serviceInfoUrlArea = $('#serviceInfoUrlArea');
   permissionsArea = $('#permissionsArea');
   clientDataArea = $('#clientDataArea');
   oauthState = $('#oauthState');
   submitButton = $('#submitButton');
   toggleDev = $('#toggleDev');
   permissionsViewInactive = $('#permissionsViewInactive');
-  usernameArea = $('#usernameArea');
+  apiEndpointArea = $('#apiEndpointArea');
   tokenArea = $('#tokenArea');
   domainArea = $('#domainArea');
   requestingAppId = $('#requestingAppId');
 
   permissionsAreaState(false);
-  registerHostname = pryv.utility.urls.parseClientURL().parseQuery()['pryv-reg'] ||
-    pryv.Auth.config.registerURL.host;
-  pryvDomain = registerHostname.split('.').splice(1,3).join('.');
-  registerUrlText.text(registerHostname);
+  pryvServiceInfoUrl = Pryv.Browser.serviceInfoFromUrl() || 'https://reg.pryv.me/service/info';
+  serviceInfoUrlArea.val(pryvServiceInfoUrl);
   masterToken.prop('checked', false);
   permissionsArea.val(JSON.stringify(defaultPermissions, null, '  '));
   masterToken.click(masterTokenManagement);
@@ -66,10 +59,7 @@ window.onload = function () {
   toggleDevOptions();
   toggleDev.click(toggleDevOptions);
 
-  // Local setup for auth popup
-  localAuth.click(function() {
-    reclaDevel.val(localAuth.is(':checked') ? ':4443/' + pryvDomain + '/access.html' : '');
-  });
+
 
 };
 
@@ -78,21 +68,21 @@ window.onload = function () {
  */
 function masterTokenManagement() {
   var masterTokenPermissions = [{
-      streamId: '*',
-      level: 'manage'
-    }];
+    streamId: '*',
+    level: 'manage'
+  }];
 
   if (masterToken.is(':checked')) {
     try {
       defaultPermissions = JSON.parse(permissionsArea.val());
       permissionsArea.val(JSON.stringify(masterTokenPermissions, null, '  '));
       permissionsAreaState(true);
-      permissionsViewInactive.css({'display': 'unset'});
+      permissionsViewInactive.css({ 'display': 'unset' });
     } catch (err) {
       logToConsole(err);
     }
   } else {
-    permissionsViewInactive.css({'display': 'none'});
+    permissionsViewInactive.css({ 'display': 'none' });
     permissionsAreaState(false);
     permissionsArea.val(JSON.stringify(defaultPermissions, null, '  '));
   }
@@ -112,7 +102,7 @@ function permissionsAreaState(state) {
  */
 function logToConsole(text) {
   console.append(text + '\n');
-  if(console.length) {
+  if (console.length) {
     console.scrollTop(console[0].scrollHeight - console.height());
   }
 }
@@ -121,66 +111,55 @@ function logToConsole(text) {
  * Process the form and request access
  */
 function requestAccess() {
-  var customRegisterUrl = registerUrlText.text();
 
-  if (customRegisterUrl) {
-    pryv.Auth.config.registerURL = {host: customRegisterUrl, 'ssl': true};
-  }
-
-  var settings = {
+  var settings = {};
+  var authRequest = {
     requestingAppId: false,
     languageCode: false,
     permissionsArea: false,
     returnURL: false,
     callbacks: {}
   };
-  settings.requestingAppId = requestingAppId.val();
+  authRequest.requestingAppId = requestingAppId.val();
 
-  if(settings.requestingAppId.length < 6) {
+  if (authRequest.requestingAppId.length < 6) {
     return alert('RequestingAppId is invalid!');
   }
 
   // Dev and advanced settings
-  settings.languageCode = lang.val();
-  settings.returnURL = returnURL.val();
-  settings.oauthState = oauthState.val();
+  authRequest.languageCode = lang.val();
+  if (authRequest.languageCode === 'default') { delete authRequest.languageCode; }
 
-  // Rec-la config for local dev
-  pryv.Auth.config.reclaDevel = (reclaDevel.val().length > 0) ? reclaDevel.val() : false;
+
+  authRequest.returnURL = returnURL.val();
+  authRequest.oauthState = oauthState.val();
+
 
   try {
-    settings.requestedPermissions = JSON.parse(permissionsArea.val());
-    
+    authRequest.requestedPermissions = JSON.parse(permissionsArea.val());
+
     // Add clientData if any
     var clientData = clientDataArea.val();
     if (clientData.length > 0) {
-      settings.clientData = JSON.parse(clientData);
+      authRequest.clientData = JSON.parse(clientData);
     }
 
     settings.spanButtonID = 'pryvButton';
 
-    settings.callbacks.initialization = function () {
-      logToConsole('Access Requested.');
-    };
-    settings.callbacks.needSignin = function () {
-      logToConsole('Access parameters validated, please sign in.');
-    };
-    settings.callbacks.signedIn = function (connection) {
-      logToConsole(
-        'Access generation successful, please copy the token to be used with ' +
-        'the associated username.');
-      usernameArea.text(connection.username);
-      tokenArea.text(connection.auth);
-      domainArea.text(pryvDomain);
-    };
-    settings.callbacks.refused = function (reason) {
-      logToConsole('Access refused by user' + reason);
-    };
-    settings.callbacks.error = function (code, message) {
-      logToConsole('Error: code=' + code + ', message: ' + message);
+    settings.onStateChange = function (state) {
+      logToConsole('##pryvAuthStateChange \t ' + JSON.stringify(state));
+      if (state.id === Pryv.Browser.AuthStates.AUTHORIZED) {
+        apiEndpointArea.text(state.apiEndpoint);
+        logToConsole('# Auth succeeded for user ' + state.apiEndpoint);
+      }
+      if (state.id === Pryv.Browser.AuthStates.LOGOUT) {
+        logToConsole('# Logout');
+      }
     };
 
-    pryv.Auth.setup(settings);
+    settings.authRequest = authRequest;
+
+    Pryv.Browser.setupAuth(settings, serviceInfoUrlArea.val());
   } catch (e) {
     logToConsole('Error in Access params: ' + e);
   }
@@ -191,12 +170,8 @@ function requestAccess() {
  */
 function toggleDevOptions() {
   returnURL.val('auto#');
-  reclaDevel.val('');
-  localAuth.prop('checked', false);
   lang.val('default');
   lang.parent().parent().toggle();
   returnURL.parent().parent().toggle();
-  reclaDevel.parent().parent().toggle();
   oauthState.parent().parent().hide();
-  clientDataArea.parent().parent().toggle();
 }
