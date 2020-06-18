@@ -12,7 +12,7 @@
     "url": "https://github.com/pryv/app-web-access"
   },
   "dependencies": {
-    "pryv": "git://github.com/pryv/lib-js.git#2.0.0"
+    "pryv": "git://github.com/pryv/lib-js.git#2.0.1"
   },
   "devDependencies": {
     "grunt": "latest",

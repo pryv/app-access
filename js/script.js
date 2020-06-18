@@ -6,6 +6,7 @@ var $ = require('jquery'),
 var masterToken,
   lang,
   returnURL,
+  referer,
   console,
   serviceInfoUrlArea,
   permissionsArea,
@@ -33,6 +34,7 @@ window.onload = function () {
   // Load ressources
   masterToken = $('#masterToken');
   lang = $('#languageCode');
+  referer = $('#referer');
   returnURL = $('#returnURL');
   console = $('#console');
   serviceInfoUrlArea = $('#serviceInfoUrlArea');
@@ -115,6 +117,7 @@ function requestAccess() {
   var settings = {};
   var authRequest = {
     requestingAppId: false,
+    referer: null,
     languageCode: false,
     permissionsArea: false,
     returnURL: false,
@@ -133,7 +136,7 @@ function requestAccess() {
 
   authRequest.returnURL = returnURL.val();
   authRequest.oauthState = oauthState.val();
-
+  authRequest.referer = referer.val() || null;
 
   try {
     authRequest.requestedPermissions = JSON.parse(permissionsArea.val());
@@ -172,6 +175,7 @@ function toggleDevOptions() {
   returnURL.val('auto#');
   lang.val('default');
   lang.parent().parent().toggle();
+  referer.parent().parent().toggle();
   returnURL.parent().parent().toggle();
   oauthState.parent().parent().hide();
 }
