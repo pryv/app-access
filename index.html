@@ -55,40 +55,42 @@
 
                 If the <b>Master Token</b> option is checked, it will set the level <b>manage</b> on all streams for the
                 selected application.<br><br>
-       
 
 
-            <form>
-                <div class="form-group row">
-                    <label for="serviceInfoUrlArea" class="col-sm-4 col-form-label">Service Info URL</label>
-                    <div class="col-sm-6">
-                        <input id='serviceInfoUrlArea' class="form-control" type='text' value=''/>
+
+                <form>
+                    <div class="form-group row">
+                        <label for="serviceInfoUrlArea" class="col-sm-4 col-form-label">Service Info URL</label>
+                        <div class="col-sm-6">
+                            <input id='serviceInfoUrlArea' class="form-control" type='text' value='' />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="requestingAppId" class="col-sm-4 col-form-label">Application ID (min length: 6)</label>
-                    <div class="col-sm-6">
-                        <input id='requestingAppId' class="form-control" type='text' value='app-web-access-test'/>
+                    <div class="form-group row">
+                        <label for="requestingAppId" class="col-sm-4 col-form-label">Application ID (min length:
+                            6)</label>
+                        <div class="col-sm-6">
+                            <input id='requestingAppId' class="form-control" type='text' value='app-web-access-test' />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="masterToken" class="col-sm-4 col-form-label">Master Token</label>
-                    <div class="col-sm-6">
-                        <input type="checkbox" class="form-control" name="masterToken" id="masterToken">
+                    <div class="form-group row">
+                        <label for="masterToken" class="col-sm-4 col-form-label">Master Token</label>
+                        <div class="col-sm-6">
+                            <input type="checkbox" class="form-control" name="masterToken" id="masterToken">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="permissionsArea" class="col-sm-4 col-form-label">
-                        Permissions (See <a href="http://api.pryv.com/reference/#authorizing-your-app">API doc</a>)</label>
-                    <div class="col-sm-6" id="permissionsViewActive">
-                        <textarea id='permissionsArea' class="form-control" cols=50 rows=10></textarea>
+                    <div class="form-group row">
+                        <label for="permissionsArea" class="col-sm-4 col-form-label">
+                            Permissions (See <a href="http://api.pryv.com/reference/#authorizing-your-app">API
+                                doc</a>)</label>
+                        <div class="col-sm-6" id="permissionsViewActive">
+                            <textarea id='permissionsArea' class="form-control" cols=50 rows=10></textarea>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <label for="clientDataArea" class="col-sm-4 col-form-label">
-                        ClientData<br>a JSON object associated with the access</label>
-                    <div class="col-sm-6">
-                        <textarea id='clientDataArea' class="form-control" cols=50 rows=10>
+                    <div class="form-group row">
+                        <label for="clientDataArea" class="col-sm-4 col-form-label">
+                            ClientData<br>a JSON object associated with the access</label>
+                        <div class="col-sm-6">
+                            <textarea id='clientDataArea' class="form-control" cols=50 rows=10>
 {
     "app-web-auth:description":
         {
@@ -97,61 +99,65 @@
         }
 }
                         </textarea>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-sm-6">
-                        <button id="toggleDev" onclick="return false;" class="btn btn-secondary btn-sm">Show/hide advanced options</button>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <button id="toggleDev" onclick="return false;" class="btn btn-secondary btn-sm">Show/hide
+                                advanced options</button>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="languageCode" class="col-sm-4 col-form-label">Language</label>
-                    <div class="col-sm-6">
-                        <select name='languageCode' id='languageCode' class="form-control">
-                        <option value="default">Browser</option>
-                        <option value="en">English</option>
-                        <option value="fr">French</option> </select>
+                    <div class="form-group row">
+                        <label for="languageCode" class="col-sm-4 col-form-label">Language</label>
+                        <div class="col-sm-6">
+                            <select name='languageCode' id='languageCode' class="form-control">
+                                <option value="default">Browser</option>
+                                <option value="en">English</option>
+                                <option value="fr">French</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="referer" class="col-sm-4 col-form-label">Referer</label>
-                    <div class="col-sm-6">
-                        <input id='referer' class="form-control" name='referer' type='text' value='' />
+                    <div class="form-group row">
+                        <label for="referer" class="col-sm-4 col-form-label">Referer</label>
+                        <div class="col-sm-6">
+                            <input id='referer' class="form-control" name='referer' type='text' value='' />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="returnURL" class="col-sm-4 col-form-label">
-                        Return URL (post login url)<br><small><b>auto#</b> by default, <b>self#</b> or other url to avoid popup</small></label>
-                    <div class="col-sm-6">
-                        <input id='returnURL' class="form-control" name='returnURL' type='text' value='' />
+                    <div class="form-group row">
+                        <label for="returnURL" class="col-sm-4 col-form-label">
+                            Return URL (post login url)<br><small><b>auto#</b> by default, <b>self#</b> or other url to
+                                avoid popup</small></label>
+                        <div class="col-sm-6">
+                            <input id='returnURL' class="form-control" name='returnURL' type='text' value='' />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="oauthState" class="col-sm-4 col-form-label">R
-                        State to simulate oauth (needs returnURL)</label>
-                    <div class="col-sm-6">
-                        <input id='oauthState' class="form-control" name='oauthState' type='text' value='' />
+                    <div class="form-group row">
+                        <label for="oauthState" class="col-sm-4 col-form-label">R
+                            State to simulate oauth (needs returnURL)</label>
+                        <div class="col-sm-6">
+                            <input id='oauthState' class="form-control" name='oauthState' type='text' value='' />
+                        </div>
                     </div>
-                </div>
-                <center><button id='submitButton' type='submit' value='Request Access' class="btn btn-primary mb-2" onclick="return false;">Request Access</button></center>
-            </form>
-            <center><span id='pryvButton'></span></center>
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="card-title">API endpoint</h2>
-                    <div class="alert alert-success" role="alert">
-                        <p id="apiEndpointArea"></p>
+                    <center><button id='submitButton' type='submit' value='Request Access' class="btn btn-primary mb-2"
+                            onclick="return false;">Request Access</button></center>
+                </form>
+                <center><span id='pryvButton'></span></center>
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">API endpoint</h2>
+                        <div class="alert alert-success" role="alert">
+                            <p id="apiEndpointArea"></p>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Console</h2>
+                    <textarea id="console" cols="100" rows="10" readonly></textarea>
+                </div>
+            </div>
         </div>
-        <div class="card">
-            <div class="card-body">
-                <h2 class="card-title">Console</h2>
-                 <textarea id="console" cols="150" rows="10" readonly></textarea>
-             </div>
-        </div>
-    </div>
 </body>
 
 </html>
