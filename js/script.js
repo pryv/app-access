@@ -120,8 +120,7 @@ function requestAccess() {
     referer: null,
     languageCode: false,
     permissionsArea: false,
-    returnURL: false,
-    callbacks: {}
+    returnURL: false
   };
   authRequest.requestingAppId = requestingAppId.val();
 
