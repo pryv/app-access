@@ -14,7 +14,6 @@ var masterToken,
   oauthState,
   submitButton,
   toggleDev,
-  permissionsViewInactive,
   apiEndpointArea,
   tokenArea,
   domainArea,
@@ -43,7 +42,6 @@ window.onload = function () {
   oauthState = $('#oauthState');
   submitButton = $('#submitButton');
   toggleDev = $('#toggleDev');
-  permissionsViewInactive = $('#permissionsViewInactive');
   apiEndpointArea = $('#apiEndpointArea');
   tokenArea = $('#tokenArea');
   domainArea = $('#domainArea');
@@ -79,12 +77,10 @@ function masterTokenManagement() {
       defaultPermissions = JSON.parse(permissionsArea.val());
       permissionsArea.val(JSON.stringify(masterTokenPermissions, null, '  '));
       permissionsAreaState(true);
-      permissionsViewInactive.css({ 'display': 'unset' });
     } catch (err) {
       logToConsole(err);
     }
   } else {
-    permissionsViewInactive.css({ 'display': 'none' });
     permissionsAreaState(false);
     permissionsArea.val(JSON.stringify(defaultPermissions, null, '  '));
   }

@@ -1,149 +1,157 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
+
 <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <title>Pryv Access Token Generation</title>
     <link rel="icon" href="logoPryv.png">
-    <link href="style.css" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" type="text/css"
-          href="https://fonts.googleapis.com/css?family=Roboto:300,400">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://api.pryv.com/style/pryv.min.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400">
 
     <script src="scriptBrowserify.js"></script>
 </head>
+
 <body>
 
-<div class="title">
-    <h1>Pryv Access Token Generation</h1>
-</div>
+    <div class="container">
+        <div class="title">
+            <h1>Pryv Access Token Generation</h1>
+        </div>
 
-<div class="container">
-    <div class="boxDiv">
-        <h2>How to</h2>
-        <ol>
-            <li>Enter the <b>Application ID</b> that you will use in your app</li>
-            <li>Setup the streams you will request access to in the <b>Permissions</b> box</li>
-            <li>Press the <b>Request Access</b> button</li>
-            <li><b>Sign in</b> with your username and password</li>
-            <li>Authorize the application access to your account by pressing on <b>Accept</b></li>
-            <li>Copy the <b>Access token</b> and use it to run your tests</li>
-        </ol>
-    </div>
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">How to</h2>
+                <ol>
+                    <li>Enter the <b>Application ID</b> that you will use in your app</li>
+                    <li>Setup the streams you will request access to in the <b>Permissions</b> box</li>
+                    <li>Press the <b>Request Access</b> button</li>
+                    <li><b>Sign in</b> with your username and password</li>
+                    <li>Authorize the application access to your account by pressing on <b>Accept</b></li>
+                    <li>Copy the <b>Access token</b> and use it to run your tests</li>
+                </ol>
+            </div>
+        </div>
 
-    <div class="boxDiv">
-        <h3>Permissions</h3>
-        This defines the streams that your access token will be allowed to manipulate.<br>
-        If you request permissions for streams that don't exist yet, they will be created on the
-        user's account upon user authorization.<br>
-        The value provided in the <b>defaultName</b> property will be used as its name.<br><br>
-        The <b>level</b> must be one of the following values:
-        <ul>
-            <li><b>read</b>: Allows to get the stream's values.</li>
-            <li><b>contribute</b>: Read and generate new content.</li>
-            <li><b>manage</b>: Contribute, update and delete.</li>
-        </ul>
-        Edit the fields <b>StreamId</b>, <b>Level</b> and <b>defaultName</b> in the text box containing a JSON array where each item represents a Permission that will be requested upon successful authentication.<br><br>
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Permissions</h2>
 
-        If the <b>Master Token</b> option is checked, it will set the level <b>manage</b> on all streams for the selected application.<br><br>
-    </div>
+                This defines the streams that your access token will be allowed to manipulate.<br>
+                If you request permissions for streams that don't exist yet, they will be created on the
+                user's account upon user authorization.<br>
+                The value provided in the <b>defaultName</b> property will be used as its name.<br><br>
+                The <b>level</b> must be one of the following values:
+                <ul>
+                    <li><b>read</b>: Allows to get the stream's values.</li>
+                    <li><b>contribute</b>: Read and generate new content.</li>
+                    <li><b>manage</b>: Contribute, update and delete.</li>
+                </ul>
+                Edit the fields <b>StreamId</b>, <b>Level</b> and <b>defaultName</b> in the text box containing a JSON
+                array
+                where each item represents a Permission that will be requested upon successful authentication.<br><br>
 
-    <table>
-        <tr>
-            <td class="leftColumn"><p><b>Service Info URL</b></p></td>
-            <td class="rightColumn"><input id='serviceInfoUrlArea' type='text' value='' /></td></p></td>
-        </tr>
-        <tr>
-            <td class="leftColumn"><p><b>Application ID</b> (min length: 6)</p></td>
-            <td class="rightColumn"><input id='requestingAppId' type='text' value='app-web-access-test'/></td>
-        </tr>
-        <tr>
-            <td class="leftColumn">
-                <p><b>Permissions</b> (See <a href="http://api.pryv.com/reference/#authorizing-your-app" target="_blank">API doc</a>)</p>
-                <div class="checkboxDiv">
-                    <input type="checkbox" name="masterToken" id="masterToken">
-                    <label for="masterToken">Master Token</label>
+                If the <b>Master Token</b> option is checked, it will set the level <b>manage</b> on all streams for the
+                selected application.<br><br>
+       
+
+
+            <form>
+                <div class="form-group row">
+                    <label for="serviceInfoUrlArea" class="col-sm-4 col-form-label">Service Info URL</label>
+                    <div class="col-sm-6">
+                        <input id='serviceInfoUrlArea' class="form-control" type='text' value=''/>
+                    </div>
                 </div>
-            </td>
-            <td class="rightColumn">
-                <div id="permissionsViewInactive"></div>
-                <div id="permissionsViewActive">
-                    <textarea id='permissionsArea'></textarea>
+                <div class="form-group row">
+                    <label for="requestingAppId" class="col-sm-4 col-form-label">Application ID (min length: 6)</label>
+                    <div class="col-sm-6">
+                        <input id='requestingAppId' class="form-control" type='text' value='app-web-access-test'/>
+                    </div>
                 </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="leftColumn">
-                <p><b>ClientData</b></p>
-                <p>a JSON object associated with the access
-                </p>
-            </td>
-            <td class="rightColumn"><textarea rows="8" id='clientDataArea'>
-{"app-web-auth:description": 
-    {
-        "type": "note/txt",
-        "content": "This is a consent message."
-    }
-}</textarea></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <button id="toggleDev">Show/hide advanced options</button>
-            </td>
-        </tr>
-        <tr>
-            <td class="leftColumn">
-                <p><b>Language</b></p>
-            </td>
-            <td class="rightColumn">
-                <select name='languageCode' id='languageCode' />
-                <option value="default">Browser</option>
-                <option value="en">English</option>
-                <option value="fr">French</option> </select>
-            </td>
-
-        </tr>
-        <tr>
-            <td class="leftColumn">
-                <p><b>Referer</b></p>
-                <p>Custom string code to track registration source</p>
-            </td>
-            <td class="rightColumn">
-                <input id='referer' name='referer' type='text' value='' />
-            </td>
-        </tr>
-        <tr>
-            <td class="leftColumn">
-                <p><b>Return URL (postlogin url)</b></p>
-                <p>auto# by default</p>
-                <p>self# or other url to avoid popup</p>
-            </td>
-            <td class="rightColumn"><input id='returnURL' name='returnURL' type='text' value='auto#'/></td>
-        </tr>
-        <tr>
-            <td class="leftColumn"><p><b>State to simulate oauth</b></br>(needs returnURL)</p></td>
-            <td class="rightColumn"><input id='oauthState' name='oauthState' type='text'/></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input id='submitButton' type='submit' value='Request Access'>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <div id="pryvButtonHolder">
-                    <center><span id='pryvButton'></span></center>
+                <div class="form-group row">
+                    <label for="masterToken" class="col-sm-4 col-form-label">Master Token</label>
+                    <div class="col-sm-6">
+                        <input type="checkbox" class="form-control" name="masterToken" id="masterToken">
+                    </div>
                 </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="leftColumn"><p><b>pryvApiEndpoint</b></p></td>
-            <td class="rightColumn"><p id="apiEndpointArea"></p></td>
-        </tr>
-    </table>
-
-    <div class="consoleDiv">
-        <h3>Console</h3>
-        <textarea id="console" cols="150" rows="10" readonly></textarea>
+                <div class="form-group row">
+                    <label for="permissionsArea" class="col-sm-4 col-form-label">
+                        Permissions (See <a href="http://api.pryv.com/reference/#authorizing-your-app">API doc</a>)</label>
+                    <div class="col-sm-6" id="permissionsViewActive">
+                        <textarea id='permissionsArea' class="form-control" cols=50 rows=10></textarea>
+                    </div>
+                </div>
+                <div>
+                    <label for="clientDataArea" class="col-sm-4 col-form-label">
+                        ClientData<br>a JSON object associated with the access</label>
+                    <div class="col-sm-6">
+                        <textarea id='clientDataArea' class="form-control" cols=50 rows=10>
+{
+    "app-web-auth:description":
+        {
+            "type": "note/txt",
+            "content": "This is a consent message."
+        }
+}
+                        </textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <button id="toggleDev" onclick="return false;" class="btn btn-secondary btn-sm">Show/hide advanced options</button>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="languageCode" class="col-sm-4 col-form-label">Language</label>
+                    <div class="col-sm-6">
+                        <select name='languageCode' id='languageCode' class="form-control">
+                        <option value="default">Browser</option>
+                        <option value="en">English</option>
+                        <option value="fr">French</option> </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="referer" class="col-sm-4 col-form-label">Referer</label>
+                    <div class="col-sm-6">
+                        <input id='referer' class="form-control" name='referer' type='text' value='' />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="returnURL" class="col-sm-4 col-form-label">
+                        Return URL (post login url)<br><small><b>auto#</b> by default, <b>self#</b> or other url to avoid popup</small></label>
+                    <div class="col-sm-6">
+                        <input id='returnURL' class="form-control" name='returnURL' type='text' value='' />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="oauthState" class="col-sm-4 col-form-label">R
+                        State to simulate oauth (needs returnURL)</label>
+                    <div class="col-sm-6">
+                        <input id='oauthState' class="form-control" name='oauthState' type='text' value='' />
+                    </div>
+                </div>
+                <center><button id='submitButton' type='submit' value='Request Access' class="btn btn-primary mb-2" onclick="return false;">Request Access</button></center>
+            </form>
+            <center><span id='pryvButton'></span></center>
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">API endpoint</h2>
+                    <div class="alert alert-success" role="alert">
+                        <p id="apiEndpointArea"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Console</h2>
+                 <textarea id="console" cols="150" rows="10" readonly></textarea>
+             </div>
+        </div>
     </div>
-</div>
 </body>
+
 </html>
